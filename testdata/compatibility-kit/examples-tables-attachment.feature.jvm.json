@@ -1,0 +1,59 @@
+[
+  {
+    "line": 1,
+    "uri": "samples/examples-tables-attachment/examples-tables-attachment.feature",
+    "id": "examples-tables---with-attachments",
+    "keyword": "Feature",
+    "name": "Examples Tables - With attachments",
+    "description": "  It is sometimes useful to take a screenshot while a scenario runs.\n  Or capture some logs.\n\n  This can also be done in an examples table.",
+    "elements": [
+      {
+        "start_timestamp": "1970-01-01T00:00:00.001Z",
+        "line": 12,
+        "id": "examples-tables---with-attachments;attaching-images-in-an-examples-table;;2",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "name": "Attaching images in an examples table",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 8,
+            "match": {
+              "location": "samples/examples-tables-attachment/examples-tables-attachment.feature.ts:4"
+            },
+            "name": "a JPEG image is attached",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.005Z",
+        "line": 13,
+        "id": "examples-tables---with-attachments;attaching-images-in-an-examples-table;;3",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "name": "Attaching images in an examples table",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 8,
+            "match": {
+              "location": "samples/examples-tables-attachment/examples-tables-attachment.feature.ts:8"
+            },
+            "name": "a PNG image is attached",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      }
+    ],
+    "tags": [ ]
+  }
+]

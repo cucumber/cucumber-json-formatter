@@ -1,0 +1,262 @@
+[
+  {
+    "line": 1,
+    "uri": "samples/attachments/attachments.feature",
+    "id": "attachments",
+    "keyword": "Feature",
+    "name": "Attachments",
+    "description": "  It is sometimes useful to take a screenshot while a scenario runs.\n  Or capture some logs.\n\n  Cucumber lets you `attach` arbitrary files during execution, and you can\n  specify a content type for the contents.\n\n  Formatters can then render these attachments in reports.\n\n  Attachments must have a body and a content type",
+    "elements": [
+      {
+        "start_timestamp": "1970-01-01T00:00:00.001Z",
+        "line": 12,
+        "id": "attachments;strings-can-be-attached-with-a-media-type",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Strings can be attached with a media type",
+        "description": "    Beware that some formatters such as @cucumber/react use the media type\n    to determine how to display an attachment.",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 16,
+            "match": {
+              "location": "samples/attachments/attachments.feature.ts:4",
+              "arguments": [
+                {
+                  "val": "\"hello\"",
+                  "offset": 11
+                },
+                {
+                  "val": "\"application/octet-stream\"",
+                  "offset": 34
+                }
+              ]
+            },
+            "name": "the string \"hello\" is attached as \"application/octet-stream\"",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.005Z",
+        "line": 18,
+        "id": "attachments;log-text",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Log text",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 19,
+            "match": {
+              "location": "samples/attachments/attachments.feature.ts:8",
+              "arguments": [
+                {
+                  "val": "\"hello\"",
+                  "offset": 11
+                }
+              ]
+            },
+            "name": "the string \"hello\" is logged",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.009Z",
+        "line": 21,
+        "id": "attachments;log-ansi-coloured-text",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Log ANSI coloured text",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 22,
+            "match": {
+              "location": "samples/attachments/attachments.feature.ts:12"
+            },
+            "name": "text with ANSI escapes is logged",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.013Z",
+        "line": 24,
+        "id": "attachments;log-json",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Log JSON",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 25,
+            "match": {
+              "location": "samples/attachments/attachments.feature.ts:18",
+              "arguments": [
+                {
+                  "val": "\"application/json\"",
+                  "offset": 36
+                }
+              ]
+            },
+            "name": "the following string is attached as \"application/json\":",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            },
+            "doc_string": {
+              "line": 26,
+              "value": "{\"message\": \"The <b>big</b> question\", \"foo\": \"bar\"}"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.017Z",
+        "line": 30,
+        "id": "attachments;byte-arrays-are-base64-encoded-regardless-of-media-type",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Byte arrays are base64-encoded regardless of media type",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 31,
+            "match": {
+              "location": "samples/attachments/attachments.feature.ts:22",
+              "arguments": [
+                {
+                  "val": "10",
+                  "offset": 14
+                },
+                {
+                  "val": "\"text/plain\"",
+                  "offset": 38
+                }
+              ]
+            },
+            "name": "an array with 10 bytes is attached as \"text/plain\"",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.021Z",
+        "line": 33,
+        "id": "attachments;attaching-jpeg-images",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Attaching JPEG images",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 34,
+            "match": {
+              "location": "samples/attachments/attachments.feature.ts:31"
+            },
+            "name": "a JPEG image is attached",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.025Z",
+        "line": 36,
+        "id": "attachments;attaching-png-images",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Attaching PNG images",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 37,
+            "match": {
+              "location": "samples/attachments/attachments.feature.ts:35"
+            },
+            "name": "a PNG image is attached",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.029Z",
+        "line": 39,
+        "id": "attachments;attaching-pdfs-with-a-different-filename",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Attaching PDFs with a different filename",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 40,
+            "match": {
+              "location": "samples/attachments/attachments.feature.ts:39"
+            },
+            "name": "a PDF document is attached and renamed",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.033Z",
+        "line": 42,
+        "id": "attachments;attaching-uris",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Attaching URIs",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 43,
+            "match": {
+              "location": "samples/attachments/attachments.feature.ts:43",
+              "arguments": [
+                {
+                  "val": "\"https://cucumber.io\"",
+                  "offset": 10
+                }
+              ]
+            },
+            "name": "a link to \"https://cucumber.io\" is attached",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          }
+        ]
+      }
+    ],
+    "tags": [ ]
+  }
+]
