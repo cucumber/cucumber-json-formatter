@@ -30,14 +30,17 @@ class MessagesToJsonWriterAcceptanceTest {
     private static final NdjsonToMessageIterable.Deserializer deserializer = (json) -> OBJECT_MAPPER.readValue(json, Envelope.class);
     private static final MessagesToJsonWriter.Serializer serializer = OBJECT_MAPPER.writer(PRETTY_PRINTER)::writeValue;
 
-    static List<TestCase> acceptance() throws IOException {
-        try (Stream<Path> paths = Files.list(Paths.get("../testdata/compatibility-kit"))) {
-            return paths
-                    .filter(path -> path.getFileName().toString().endsWith(".ndjson"))
-                    .map(TestCase::new)
-                    .sorted(Comparator.comparing(testCase -> testCase.source))
-                    .collect(Collectors.toList());
-        }
+    static List<TestCase> compatibilityKit() throws IOException {
+        return TestCase.fromDirectory("../testdata/cucumber-jvm/compatibility-kit");
+    }
+
+    static List<TestCase> dialectsCucumberJvm726Java() throws IOException {
+        return TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java/testdata");
+    }
+
+
+    static List<TestCase> dialectsCucumberJvm726Java8() throws IOException {
+        return TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java8/testdata");
     }
 
     private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out) throws IOException {
@@ -54,28 +57,30 @@ class MessagesToJsonWriterAcceptanceTest {
         return out;
     }
 
+    private static void assertJsonEquals(String expected, String actual) throws JSONException {
+        JSONAssert.assertEquals(expected, actual, true);
+    }
+
     @ParameterizedTest
-    @MethodSource("acceptance")
-    void test(TestCase testCase) throws IOException, JSONException {
+    @MethodSource("compatibilityKit")
+    @MethodSource("dialectsCucumberJvm726Java")
+    @MethodSource("dialectsCucumberJvm726Java8")
+    void testCompatibilityKit(TestCase testCase) throws IOException, JSONException {
         ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream());
         byte[] expected = Files.readAllBytes(testCase.expected);
         assertJsonEquals(new String(expected, UTF_8), new String(actual.toByteArray(), UTF_8));
     }
 
-    private void assertJsonEquals(String expected, String actual) throws JSONException {
-        JSONAssert.assertEquals(expected, actual, true);
-    }
-
     @ParameterizedTest
-    @MethodSource("acceptance")
+    @MethodSource("compatibilityKit")
     void validateAgainstJsonSchema(TestCase testCase) throws IOException {
         // TODO:
     }
 
     @ParameterizedTest
-    @MethodSource("acceptance")
+    @MethodSource("compatibilityKit")
     @Disabled
-    void updateExpectedXmlReportFiles(TestCase testCase) throws IOException {
+    void updateExpectedJsonFiles(TestCase testCase) throws IOException {
         try (OutputStream out = Files.newOutputStream(testCase.expected)) {
             writeJsonReport(testCase, out);
         }
@@ -84,7 +89,6 @@ class MessagesToJsonWriterAcceptanceTest {
     static class TestCase {
         private final Path source;
         private final Path expected;
-
         private final String name;
 
         TestCase(Path source) {
@@ -92,7 +96,17 @@ class MessagesToJsonWriterAcceptanceTest {
             String fileName = source.getFileName().toString();
             this.name = fileName.substring(0, fileName.lastIndexOf(".ndjson"));
             // Each cucumber has a different dialect
-            this.expected = source.getParent().resolve(name + ".jvm.json");
+            this.expected = source.getParent().resolve(name + ".ndjson.jvm.json");
+        }
+
+        static List<TestCase> fromDirectory(String files) throws IOException {
+            try (Stream<Path> paths = Files.list(Paths.get(files))) {
+                return paths
+                        .filter(path -> path.getFileName().toString().endsWith(".ndjson"))
+                        .map(TestCase::new)
+                        .sorted(Comparator.comparing(testCase -> testCase.source))
+                        .collect(Collectors.toList());
+            }
         }
 
         @Override
@@ -113,6 +127,5 @@ class MessagesToJsonWriterAcceptanceTest {
             return Objects.hash(source);
         }
     }
-
 }
 

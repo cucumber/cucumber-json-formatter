@@ -42,6 +42,7 @@ import io.cucumber.messages.types.TestCaseStarted;
 import io.cucumber.messages.types.TestStep;
 import io.cucumber.messages.types.TestStepFinished;
 import io.cucumber.messages.types.TestStepResult;
+import io.cucumber.messages.types.TestStepResultStatus;
 import io.cucumber.messages.types.Timestamp;
 import io.cucumber.query.Lineage;
 import io.cucumber.query.LineageReducer;
@@ -288,11 +289,18 @@ final class JsonReportWriter {
     }
 
     private JvmResult createJvmResult(TestStepResult result) {
-        Duration duration = Convertor.toDuration(result.getDuration());
         return new JvmResult(
-            duration.isZero() ? null : duration.toNanos(),
+            formatDuration(result),
             JvmStatus.valueOf(result.getStatus().name().toLowerCase(ROOT)),
             result.getException().flatMap(Exception::getStackTrace).orElse(null));
+    }
+
+    private static Long formatDuration(TestStepResult result) {
+        Duration duration = Convertor.toDuration(result.getDuration());
+        if (result.getStatus() == TestStepResultStatus.UNDEFINED) {
+            return null;
+        }
+        return duration.isZero() ? null : duration.toNanos();
     }
 
     private List<CucumberJvmJson.JvmEmbedding> createEmbeddings(List<Attachment> attachments) {

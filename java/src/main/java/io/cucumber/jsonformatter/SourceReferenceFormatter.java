@@ -14,7 +14,7 @@ final class SourceReferenceFormatter {
         if (sourceReference.getJavaMethod().isPresent()) {
             return sourceReference.getJavaMethod()
                     .map(javaMethod -> String.format(
-                        "%s#%s(%s)",
+                        "%s.%s(%s)",
                         javaMethod.getClassName(),
                         javaMethod.getMethodName(),
                         String.join(",", javaMethod.getMethodParameterTypes())));
@@ -22,7 +22,7 @@ final class SourceReferenceFormatter {
         if (sourceReference.getJavaStackTraceElement().isPresent()) {
             return sourceReference.getJavaStackTraceElement()
                     .map(javaStackTraceElement -> String.format(
-                        "%s#%s(%s%s)",
+                        "%s.%s(%s%s)",
                         javaStackTraceElement.getClassName(),
                         javaStackTraceElement.getMethodName(),
                         javaStackTraceElement.getFileName(),

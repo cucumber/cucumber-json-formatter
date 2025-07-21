@@ -13,20 +13,18 @@ on:
       - testdata/**
 
 jobs:
-  test-testdata:
+  test-cucumber-jvm-testdata:
     runs-on: ubuntu-latest
 
     steps:
-
     - uses: actions/checkout@v4
-
     - uses: actions/setup-node@v4
       with:
         cache: 'npm'
-        cache-dependency-path: testdata/compatibility-kit/package-lock.json
+        cache-dependency-path: testdata/cucumber-jvm/compatibility-kit/package-lock.json
 
     - run: npm ci
-      working-directory: testdata/compatibility-kit
+      working-directory: testdata/cucumber-jvm/compatibility-kit/
 
     - name: check repository is not dirty
       run: "[[ -z $(git status --porcelain) ]]"
