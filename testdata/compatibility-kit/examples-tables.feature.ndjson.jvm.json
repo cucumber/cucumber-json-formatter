@@ -207,7 +207,8 @@
             "name": "I should have 0 cucumbers",
             "result": {
               "duration": 1000000,
-              "status": "failed"
+              "status": "failed",
+              "error_message": "samples/examples-tables/examples-tables.feature:14\nsamples/examples-tables/examples-tables.feature:25"
             }
           }
         ],
@@ -277,7 +278,8 @@
             "name": "I should have 0 cucumbers",
             "result": {
               "duration": 1000000,
-              "status": "failed"
+              "status": "failed",
+              "error_message": "samples/examples-tables/examples-tables.feature:14\nsamples/examples-tables/examples-tables.feature:26"
             }
           }
         ],

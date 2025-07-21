@@ -5,7 +5,7 @@
     "id": "hooks---conditional-execution",
     "keyword": "Feature",
     "name": "Hooks - Conditional execution",
-    "description": "  Hooks are special steps that run before or after each scenario's steps.\n\n  They can also conditionally target specific scenarios, using tag expressions",
+    "description": "  Hooks are special steps that run before or after each scenario's steps.\n\n  They can also conditionally target specific scenarios, using tag expressions.",
     "elements": [
       {
         "start_timestamp": "1970-01-01T00:00:00.001Z",
@@ -35,7 +35,8 @@
             },
             "result": {
               "duration": 1000000,
-              "status": "failed"
+              "status": "failed",
+              "error_message": "samples/hooks-conditional/hooks-conditional.feature:7"
             }
           }
         ],
@@ -74,7 +75,8 @@
             },
             "result": {
               "duration": 1000000,
-              "status": "failed"
+              "status": "failed",
+              "error_message": "samples/hooks-conditional/hooks-conditional.feature:11"
             }
           }
         ],

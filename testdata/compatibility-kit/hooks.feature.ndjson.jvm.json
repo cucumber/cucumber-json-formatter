@@ -70,7 +70,8 @@
             "name": "a step fails",
             "result": {
               "duration": 1000000,
-              "status": "failed"
+              "status": "failed",
+              "error_message": "samples/hooks/hooks.feature:8"
             }
           }
         ],

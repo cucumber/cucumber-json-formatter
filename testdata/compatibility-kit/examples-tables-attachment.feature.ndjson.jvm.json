@@ -5,11 +5,11 @@
     "id": "examples-tables---with-attachments",
     "keyword": "Feature",
     "name": "Examples Tables - With attachments",
-    "description": "  It is sometimes useful to take a screenshot while a scenario runs.\n  Or capture some logs.\n\n  This can also be done in an examples table.",
+    "description": "  It is sometimes useful to take a screenshot while a scenario runs or capture some logs.",
     "elements": [
       {
         "start_timestamp": "1970-01-01T00:00:00.001Z",
-        "line": 12,
+        "line": 9,
         "id": "examples-tables---with-attachments;attaching-images-in-an-examples-table;;2",
         "type": "scenario",
         "keyword": "Scenario Outline",
@@ -18,7 +18,7 @@
         "steps": [
           {
             "keyword": "When ",
-            "line": 8,
+            "line": 5,
             "match": {
               "location": "samples/examples-tables-attachment/examples-tables-attachment.feature.ts:4"
             },
@@ -38,7 +38,7 @@
       },
       {
         "start_timestamp": "1970-01-01T00:00:00.005Z",
-        "line": 13,
+        "line": 10,
         "id": "examples-tables---with-attachments;attaching-images-in-an-examples-table;;3",
         "type": "scenario",
         "keyword": "Scenario Outline",
@@ -47,7 +47,7 @@
         "steps": [
           {
             "keyword": "When ",
-            "line": 8,
+            "line": 5,
             "match": {
               "location": "samples/examples-tables-attachment/examples-tables-attachment.feature.ts:8"
             },

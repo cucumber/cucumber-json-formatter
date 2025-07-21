@@ -94,7 +94,8 @@
             "name": "a step that always fails",
             "result": {
               "duration": 1000000,
-              "status": "failed"
+              "status": "failed",
+              "error_message": "samples/retry/retry.feature:18"
             }
           }
         ]

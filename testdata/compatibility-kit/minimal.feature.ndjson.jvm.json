@@ -5,7 +5,7 @@
     "id": "minimal",
     "keyword": "Feature",
     "name": "minimal",
-    "description": "  Cucumber doesn't execute this markdown, but @cucumber/react renders it\n  \n  * This is\n  * a bullet\n  * list",
+    "description": "  Cucumber doesn't execute this markdown, but @cucumber/react renders it.\n  \n  * This is\n  * a bullet\n  * list",
     "elements": [
       {
         "start_timestamp": "1970-01-01T00:00:00.001Z",

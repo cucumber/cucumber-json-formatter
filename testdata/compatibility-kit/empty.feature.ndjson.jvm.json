@@ -5,7 +5,7 @@
     "id": "empty-scenarios",
     "keyword": "Feature",
     "name": "Empty Scenarios",
-    "description": "  Sometimes we want to quickly jot down a new scenario without specifying any actual steps\n  for what should be executed.\n\n  In this instance we want to stipulate what should / shouldn't run and what the output is",
+    "description": "  Sometimes we want to quickly jot down a new scenario without specifying any actual steps\n  for what should be executed.\n\n  In this instance we want to stipulate what should / shouldn't run and what the output is.",
     "elements": [ ],
     "tags": [ ]
   }
