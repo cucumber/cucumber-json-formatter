@@ -31,7 +31,7 @@ class MessagesToJsonWriterAcceptanceTest {
     private static final MessagesToJsonWriter.Serializer serializer = OBJECT_MAPPER.writer(PRETTY_PRINTER)::writeValue;
 
     static List<TestCase> compatibilityKit() throws IOException {
-        return TestCase.fromDirectory("../testdata/cucumber-jvm/compatibility-kit");
+        return TestCase.fromDirectory("../testdata/compatibility-kit");
     }
 
     static List<TestCase> dialectsCucumberJvm726Java() throws IOException {
