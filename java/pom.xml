@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>json-formatter</artifactId>
-    <version>0.8.1-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Cucumber Json Formatter</name>
     <description>Writes Cucumber message into the legacy Cucumber JSON format</description>
