@@ -1,5 +1,9 @@
 package io.cucumber.jsonformatter;
 
+import com.networknt.schema.InputFormat;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.ValidationMessage;
 import io.cucumber.messages.NdjsonToMessageIterable;
 import io.cucumber.messages.types.Envelope;
 import org.json.JSONException;
@@ -15,32 +19,31 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.networknt.schema.SpecVersion.VersionFlag.*;
 import static io.cucumber.jsonformatter.Jackson.OBJECT_MAPPER;
 import static io.cucumber.jsonformatter.Jackson.PRETTY_PRINTER;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 class MessagesToJsonWriterAcceptanceTest {
     private static final NdjsonToMessageIterable.Deserializer deserializer = (json) -> OBJECT_MAPPER.readValue(json, Envelope.class);
     private static final MessagesToJsonWriter.Serializer serializer = OBJECT_MAPPER.writer(PRETTY_PRINTER)::writeValue;
 
-    static List<TestCase> compatibilityKit() throws IOException {
-        return TestCase.fromDirectory("../testdata/compatibility-kit");
-    }
-
-    static List<TestCase> dialectsCucumberJvm726Java() throws IOException {
-        return TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java/testdata");
-    }
-
-
-    static List<TestCase> dialectsCucumberJvm726Java8() throws IOException {
-        return TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java8/testdata");
+    static List<TestCase> all() throws IOException {
+        List<TestCase> cases = new ArrayList<>();
+        cases.addAll(TestCase.fromDirectory("../testdata/compatibility-kit"));
+        cases.addAll(TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java/testdata"));
+        cases.addAll(TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java8/testdata"));
+        return cases;
     }
 
     private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out) throws IOException {
@@ -62,9 +65,7 @@ class MessagesToJsonWriterAcceptanceTest {
     }
 
     @ParameterizedTest
-    @MethodSource("compatibilityKit")
-    @MethodSource("dialectsCucumberJvm726Java")
-    @MethodSource("dialectsCucumberJvm726Java8")
+    @MethodSource("all")
     void testCompatibilityKit(TestCase testCase) throws IOException, JSONException {
         ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream());
         byte[] expected = Files.readAllBytes(testCase.expected);
@@ -72,9 +73,20 @@ class MessagesToJsonWriterAcceptanceTest {
     }
 
     @ParameterizedTest
-    @MethodSource("compatibilityKit")
+    @MethodSource("all")
     void validateAgainstJsonSchema(TestCase testCase) throws IOException {
-        // TODO:
+        JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.getInstance(V202012);
+
+        InputStream resourceAsStream = MessagesToJsonWriterAcceptanceTest.class.getResourceAsStream("/cucumber-jvm.json");
+        JsonSchema schema = jsonSchemaFactory.getSchema(resourceAsStream);
+        ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream());
+        
+        Set<ValidationMessage> assertions = schema.validate(
+                new String(actual.toByteArray(), UTF_8), 
+                InputFormat.JSON,
+                // By default, since Draft 2019-09 the format keyword only generates annotations and not assertions
+                executionContext -> executionContext.getExecutionConfig().setFormatAssertionsEnabled(true));
+        assertThat(assertions).isEmpty();
     }
 
     @ParameterizedTest
