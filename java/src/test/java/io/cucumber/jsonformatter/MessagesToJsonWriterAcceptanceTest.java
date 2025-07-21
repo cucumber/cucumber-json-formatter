@@ -40,10 +40,14 @@ class MessagesToJsonWriterAcceptanceTest {
 
     static List<TestCase> all() throws IOException {
         List<TestCase> cases = new ArrayList<>();
-        cases.addAll(TestCase.fromDirectory("../testdata/compatibility-kit"));
+        cases.addAll(compatibilityKit());
         cases.addAll(TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java/testdata"));
         cases.addAll(TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java8/testdata"));
         return cases;
+    }
+
+    private static List<TestCase> compatibilityKit() throws IOException {
+        return TestCase.fromDirectory("../testdata/compatibility-kit");
     }
 
     private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out) throws IOException {
@@ -66,7 +70,7 @@ class MessagesToJsonWriterAcceptanceTest {
 
     @ParameterizedTest
     @MethodSource("all")
-    void testCompatibilityKit(TestCase testCase) throws IOException, JSONException {
+    void test(TestCase testCase) throws IOException, JSONException {
         ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream());
         byte[] expected = Files.readAllBytes(testCase.expected);
         assertJsonEquals(new String(expected, UTF_8), new String(actual.toByteArray(), UTF_8));

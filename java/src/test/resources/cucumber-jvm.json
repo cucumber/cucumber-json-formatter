@@ -142,6 +142,18 @@
           "items": {
             "$ref": "#/definitions/JvmDataTableRow"
           }
+        },
+        "embeddings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JvmEmbedding"
+          }
+        },
+        "output": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -245,6 +257,25 @@
       ],
       "additionalProperties": false
     },
+    "JvmEmbedding": {
+      "type": "object",
+      "properties": {
+          "mime_type": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+      },
+      "required": [
+        "mime_type",
+        "data"
+      ],
+      "additionalProperties": false
+    },
     "JvmHook": {
       "type": "object",
       "properties": {
@@ -253,6 +284,18 @@
         },
         "result": {
           "$ref": "#/definitions/JvmResult"
+        },
+        "embeddings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JvmEmbedding"
+          }
+        },
+        "output": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": [

@@ -276,16 +276,21 @@ final class JsonReportWriter {
 
     private List<CucumberJvmJson.JvmHook> createHookSteps(List<TestStepFinished> testStepsFinished) {
         return testStepsFinished.stream()
-                .map(testStepFinished -> query.findTestStepBy(testStepFinished)
-                        .flatMap(testStep -> query.findHookBy(testStep)
-                                .map(hook -> new CucumberJvmJson.JvmHook(
-                                    createJvmMatch(testStep),
-                                    createJvmResult(testStepFinished.getTestStepResult()),
-                                    createEmbeddings(query.findAttachmentsBy(testStepFinished)),
-                                    createOutput(query.findAttachmentsBy(testStepFinished))))))
+                .map(this::createJvmHook)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(toList());
+    }
+
+    private Optional<CucumberJvmJson.JvmHook> createJvmHook(TestStepFinished testStepFinished) {
+        List<Attachment> attachments = query.findAttachmentsBy(testStepFinished);
+        return query.findTestStepBy(testStepFinished)
+                .flatMap(testStep -> query.findHookBy(testStep)
+                        .map(hook -> new CucumberJvmJson.JvmHook(
+                                createJvmMatch(testStep),
+                                createJvmResult(testStepFinished.getTestStepResult()),
+                                createEmbeddings(attachments),
+                                createOutput(attachments))));
     }
 
     private JvmResult createJvmResult(TestStepResult result) {
@@ -381,7 +386,8 @@ final class JsonReportWriter {
                 .getOrDefault(testStepFinished, emptyList());
         List<TestStepFinished> afterStepHooks = data.testStepData.afterStepStepsByStep
                 .getOrDefault(testStepFinished, emptyList());
-
+        List<Attachment> attachments = query.findAttachmentsBy(testStepFinished);
+        
         return query.findTestStepBy(testStepFinished)
                 .flatMap(testStep -> query.findPickleStepBy(testStep)
                         .flatMap(pickleStep -> query.findStepBy(pickleStep)
@@ -394,7 +400,10 @@ final class JsonReportWriter {
                                     createJvmDocString(step),
                                     createJvmDataTableRows(step),
                                     nullIfEmpty(createHookSteps(beforeStepHooks)),
-                                    nullIfEmpty(createHookSteps(afterStepHooks))))));
+                                    nullIfEmpty(createHookSteps(afterStepHooks)),
+                                    createEmbeddings(attachments),
+                                    createOutput(attachments)
+                                ))));
     }
 
     private JvmMatch createJvmMatch(TestStep testStep) {

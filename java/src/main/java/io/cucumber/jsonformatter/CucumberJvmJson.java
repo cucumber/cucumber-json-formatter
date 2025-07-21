@@ -163,10 +163,12 @@ final class CucumberJvmJson {
         private final List<JvmDataTableRow> rows;
         private final List<JvmHook> before;
         private final List<JvmHook> after;
+        private final List<JvmEmbedding> embeddings;
+        private final List<String> output;
 
         JvmStep(
                 String keyword, Long line, JvmMatch match, String name, JvmResult result, JvmDocString doc_string,
-                List<JvmDataTableRow> rows, List<JvmHook> before, List<JvmHook> after
+                List<JvmDataTableRow> rows, List<JvmHook> before, List<JvmHook> after, List<JvmEmbedding> embeddings, List<String> output
         ) {
             this.keyword = requireNonNull(keyword);
             this.line = requireNonNull(line);
@@ -177,6 +179,8 @@ final class CucumberJvmJson {
             this.rows = rows;
             this.before = before;
             this.after = after;
+            this.embeddings = embeddings;
+            this.output = output;
         }
 
         public String getKeyword() {
@@ -213,6 +217,14 @@ final class CucumberJvmJson {
 
         public List<JvmHook> getAfter() {
             return after;
+        }
+
+        public List<JvmEmbedding> getEmbeddings() {
+            return embeddings;
+        }
+
+        public List<String> getOutput() {
+            return output;
         }
     }
 

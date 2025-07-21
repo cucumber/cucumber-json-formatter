@@ -92,6 +92,9 @@
                   "5"
                 ]
               }
+            ],
+            "output": [
+              "We are logging some plain text (fail)"
             ]
           },
           {
@@ -192,6 +195,9 @@
                   "5"
                 ]
               }
+            ],
+            "output": [
+              "We are logging some plain text (pass)"
             ]
           },
           {
