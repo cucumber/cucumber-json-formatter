@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
     <name>Cucumber Json Formatter</name>
     <description>Writes Cucumber message into the legacy Cucumber JSON format</description>
-    <url>https://github.com/cucumber/json-formatter</url>
+    <url>https://github.com/cucumber/cucumber-json-formatter</url>
 
     <properties>
         <project.Automatic-Module-Name>io.cucumber.jsonformatter</project.Automatic-Module-Name>
@@ -21,9 +21,9 @@
     </properties>
 
     <scm>
-        <connection>scm:git:git://github.com/cucumber/json-formatter.git</connection>
-        <developerConnection>scm:git:git@github.com:cucumber/json-formatter.git</developerConnection>
-        <url>git://github.com/cucumber/json-formatter.git</url>
+        <connection>scm:git:git://github.com/cucumber/cucumber-json-formatter.git</connection>
+        <developerConnection>scm:git:git@github.com:cucumber/cucumber-json-formatter.git</developerConnection>
+        <url>git://github.com/cucumber/cucumber-json-formatter.git</url>
         <tag>HEAD</tag>
     </scm>
 
