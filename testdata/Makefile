@@ -12,4 +12,4 @@ $(SUBDIRS):
 	$(MAKE) --directory=$@
 
 clean:
-	rm -rf ./**/testdata
+	rm -rf ./**/**/testdata
