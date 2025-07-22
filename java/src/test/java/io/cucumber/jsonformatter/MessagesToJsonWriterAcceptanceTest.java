@@ -89,9 +89,12 @@ class MessagesToJsonWriterAcceptanceTest {
     @ParameterizedTest
     @MethodSource("all")
     void validateAgainstJsonSchema(TestCase testCase) throws IOException {
-        ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream());
+        // The actual should be identical to the expected.
+        // So for schema validation there is no need to run the formatter
+        // Makes the test faster 
+        byte[] expected = Files.readAllBytes(testCase.expected);
         Set<ValidationMessage> assertions = jsonSchema.validate(
-                new String(actual.toByteArray(), UTF_8),
+                new String(expected, UTF_8),
                 InputFormat.JSON,
                 // By default, since Draft 2019-09 the format keyword only generates annotations and not assertions
                 executionContext -> executionContext.getExecutionConfig().setFormatAssertionsEnabled(true));
