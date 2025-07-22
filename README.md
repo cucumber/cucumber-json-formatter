@@ -1,6 +1,6 @@
 ⚠️ This is an internal package; you don't need to install it in order to use the JSON Formatter.
 
-# json-formatter
+# Cucumber JSON Formatter
 Writes Cucumber message into the legacy Cucumber JSON format
 
 The Cucumber JSON report is a de facto standard without specification. The standard
