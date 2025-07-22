@@ -1,8 +1,8 @@
-package io.cucumber.jsonschema;
+package io.cucumber.jsonformatter
 
 import io.cucumber.scala.{EN, ScalaDsl, Scenario, PendingException}
 
-object StepDefinitions {
+private object StepDefinitions {
   var decay = 0;
 }
 
