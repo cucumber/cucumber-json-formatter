@@ -289,8 +289,8 @@ final class JsonReportWriter {
                         .map(hook -> new CucumberJvmJson.JvmHook(
                                 createJvmMatch(testStep),
                                 createJvmResult(testStepFinished.getTestStepResult()),
-                                createEmbeddings(attachments),
-                                createOutput(attachments))));
+                                nullIfEmpty(createEmbeddings(attachments)),
+                                nullIfEmpty(createOutput(attachments)))));
     }
 
     private JvmResult createJvmResult(TestStepResult result) {
@@ -309,36 +309,20 @@ final class JsonReportWriter {
     }
 
     private List<CucumberJvmJson.JvmEmbedding> createEmbeddings(List<Attachment> attachments) {
-        if (attachments.isEmpty()) {
-            return null;
-        }
-        List<CucumberJvmJson.JvmEmbedding> embeddings = attachments.stream()
+        return attachments.stream()
                 .filter(attachment -> attachment.getContentEncoding() == BASE64)
                 .map(attachment -> new CucumberJvmJson.JvmEmbedding(
                     attachment.getMediaType(),
                     attachment.getBody(),
                     attachment.getFileName().orElse(null)))
                 .collect(toList());
-
-        if (embeddings.isEmpty()) {
-            return null;
-        }
-        return embeddings;
     }
 
     private List<String> createOutput(List<Attachment> attachments) {
-        if (attachments.isEmpty()) {
-            return null;
-        }
-        List<String> outputs = attachments.stream()
+        return attachments.stream()
                 .filter(attachment -> attachment.getContentEncoding() == IDENTITY)
                 .map(Attachment::getBody)
                 .collect(toList());
-
-        if (outputs.isEmpty()) {
-            return null;
-        }
-        return outputs;
     }
 
     private List<JvmLocationTag> createJvmLocationTags(Feature feature) {
@@ -401,8 +385,8 @@ final class JsonReportWriter {
                                     createJvmDataTableRows(step),
                                     nullIfEmpty(createHookSteps(beforeStepHooks)),
                                     nullIfEmpty(createHookSteps(afterStepHooks)),
-                                    createEmbeddings(attachments),
-                                    createOutput(attachments)
+                                    nullIfEmpty(createEmbeddings(attachments)),
+                                    nullIfEmpty(createOutput(attachments))
                                 ))));
     }
 
