@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.networknt.schema.SpecVersion.VersionFlag.*;
+import static com.networknt.schema.SpecVersion.VersionFlag.V202012;
 import static io.cucumber.jsonformatter.Jackson.OBJECT_MAPPER;
 import static io.cucumber.jsonformatter.Jackson.PRETTY_PRINTER;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -37,6 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MessagesToJsonWriterAcceptanceTest {
     private static final NdjsonToMessageIterable.Deserializer deserializer = (json) -> OBJECT_MAPPER.readValue(json, Envelope.class);
     private static final MessagesToJsonWriter.Serializer serializer = OBJECT_MAPPER.writer(PRETTY_PRINTER)::writeValue;
+    private static final JsonSchema jsonSchema = readJsonSchema();
 
     static List<TestCase> all() throws IOException {
         List<TestCase> cases = new ArrayList<>();
@@ -68,6 +69,15 @@ class MessagesToJsonWriterAcceptanceTest {
         JSONAssert.assertEquals(expected, actual, true);
     }
 
+    private static JsonSchema readJsonSchema() {
+        Path path = Paths.get("../testdata/json-schema/cucumber-jvm.json");
+        try (InputStream resource = Files.newInputStream(path)) {
+            return JsonSchemaFactory.getInstance(V202012).getSchema(resource);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @ParameterizedTest
     @MethodSource("all")
     void test(TestCase testCase) throws IOException, JSONException {
@@ -79,14 +89,9 @@ class MessagesToJsonWriterAcceptanceTest {
     @ParameterizedTest
     @MethodSource("all")
     void validateAgainstJsonSchema(TestCase testCase) throws IOException {
-        JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.getInstance(V202012);
-
-        InputStream resourceAsStream = MessagesToJsonWriterAcceptanceTest.class.getResourceAsStream("/cucumber-jvm.json");
-        JsonSchema schema = jsonSchemaFactory.getSchema(resourceAsStream);
         ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream());
-        
-        Set<ValidationMessage> assertions = schema.validate(
-                new String(actual.toByteArray(), UTF_8), 
+        Set<ValidationMessage> assertions = jsonSchema.validate(
+                new String(actual.toByteArray(), UTF_8),
                 InputFormat.JSON,
                 // By default, since Draft 2019-09 the format keyword only generates annotations and not assertions
                 executionContext -> executionContext.getExecutionConfig().setFormatAssertionsEnabled(true));

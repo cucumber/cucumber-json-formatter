@@ -3,5 +3,9 @@
   "extends": [
     "github>cucumber/renovate-config"
   ],
-  "ignorePaths": ["testdata/cucumber-jvm/**"]
+  "ignorePaths": [
+    "testdata/cucumber-jvm/**",
+    "testdata/cucumber-js/**",
+    "testdata/cucumber-ruby/**"
+  ]
 }

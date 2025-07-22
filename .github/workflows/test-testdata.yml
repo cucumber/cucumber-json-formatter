@@ -6,12 +6,14 @@ on:
       - main
     paths:
       - testdata/compatibility-kit/**
+      - testdata/json-schema/**
       - .github/**
   pull_request:
     branches:
       - main
     paths:
       - testdata/compatibility-kit/**
+      - testdata/json-schema/**
       - .github/**
 
 jobs:
@@ -26,6 +28,25 @@ jobs:
 
       - run: npm ci
         working-directory: testdata/compatibility-kit/
+
+      - name: check repository is not dirty
+        run: "[[ -z $(git status --porcelain) ]]"
+
+      - name: show diff
+        if: ${{ failure() }}
+        run: git status --porcelain
+  
+  test-testdata-json-schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+          cache-dependency-path: testdata/json-schema/package-lock.json
+
+      - run: npm ci
+        working-directory: testdata/json-schema/
 
       - name: check repository is not dirty
         run: "[[ -z $(git status --porcelain) ]]"
