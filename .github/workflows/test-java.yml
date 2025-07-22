@@ -39,7 +39,7 @@ jobs:
 
       - run: mvn verify
         working-directory: java
-  pittest-java:
+  test-java-pittest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
