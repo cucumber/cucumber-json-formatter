@@ -7,12 +7,13 @@ The Cucumber JSON report is a de facto standard without specification. The stand
 also differs per Cucumber implementation.
 
 For each language we validate this implementation against the implementation
-specific variants of the [cucumber-json-schema](https://github.com/cucumber/cucumber-json-schema) as well as the original implementation. So
-there should be a good chance your tooling will understand it.
+specific variants of the [cucumber-json-schema](https://github.com/cucumber/cucumber-json-schema)
+as well as the original implementation. So  there should be a good chance your
+tooling will understand it.
 
 ## Features
 
-Given a passing feature file
+Given a passing feature file:
 
 ```gherkin
 Feature: minimal
