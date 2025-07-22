@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.function.Function;
@@ -50,31 +49,8 @@ public final class MessagesToJsonWriter implements AutoCloseable {
         }
 
         public Builder relativizeAgainst(URI uri) {
-            // TODO: Needs coverage
-            // TODO: Naming?
-            this.uriFormatter = relativize(uri)
-                    .andThen(URI::toString);
+            this.uriFormatter = new RelativeUriFormatter(uri).andThen(URI::toString);
             return this;
-        }
-
-        static Function<URI, URI> relativize(URI base) {
-            return uri -> {
-                // TODO: Needs coverage
-                if (!"file".equals(uri.getScheme())) {
-                    return uri;
-                }
-                if (!uri.isAbsolute()) {
-                    return uri;
-                }
-
-                try {
-                    URI relative = base.relativize(uri);
-                    // Scheme is lost by relativize
-                    return new URI("file", relative.getSchemeSpecificPart(), relative.getFragment());
-                } catch (URISyntaxException e) {
-                    throw new IllegalArgumentException(e.getMessage(), e);
-                }
-            };
         }
 
         public MessagesToJsonWriter build(OutputStream out) {
@@ -126,4 +102,5 @@ public final class MessagesToJsonWriter implements AutoCloseable {
         void writeValue(Writer writer, Object value) throws IOException;
 
     }
+
 }

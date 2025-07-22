@@ -46,11 +46,6 @@ final class IdNamingVisitor implements LineageReducer.Collector<String> {
     }
 
     @Override
-    public void add(Pickle pickle) {
-        formatId(pickle.getName());
-    }
-
-    @Override
     public String finish() {
         return String.join(";", parts);
     }

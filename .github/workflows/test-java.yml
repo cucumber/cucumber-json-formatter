@@ -39,3 +39,14 @@ jobs:
 
       - run: mvn verify
         working-directory: java
+  test-java-pittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: 17
+          cache: "maven"
+      - run: mvn test-compile org.pitest:pitest-maven:mutationCoverage
+        working-directory: java

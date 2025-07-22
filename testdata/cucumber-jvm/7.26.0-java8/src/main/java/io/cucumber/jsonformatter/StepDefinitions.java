@@ -16,6 +16,14 @@ public class StepDefinitions implements En {
             throw new RuntimeException("failing after hook");
 
         });
+        Before("@failing_before_step", () -> {
+            throw new RuntimeException("failing before step hook");
+        });
+
+        After("@failing_after_step", () -> {
+            throw new RuntimeException("failing after step hook");
+
+        });
 
         Given("^.*pass.*$", () -> {
 

@@ -1,5 +1,7 @@
 package io.cucumber.jsonformatter;
 
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.BeforeStep;
 import io.cucumber.java.PendingException;
 import io.cucumber.java.Before;
 import io.cucumber.java.After;
@@ -10,11 +12,21 @@ public class StepDefinitions {
 
     @Before("@failing_before")
     public void tagged_failing_before_hook() {
-        throw new RuntimeException("failing before hook");
+        throw new RuntimeException("failing before step hook");
     }
 
     @After("@failing_after")
     public void tagged_failing_after_hook() {
+        throw new RuntimeException("failing after step hook");
+    }
+
+    @BeforeStep("@failing_before_step")
+    public void tagged_failing_before_step_hook() {
+        throw new RuntimeException("failing before hook");
+    }
+
+    @AfterStep("@failing_after_step")
+    public void tagged_failing_after_step_hook() {
         throw new RuntimeException("failing after hook");
     }
 
