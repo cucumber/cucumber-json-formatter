@@ -10,6 +10,10 @@ import static java.util.Objects.requireNonNull;
  * schema.
  */
 final class CucumberJvmJson {
+    private static <T> List<T> nullIfEmpty(List<T> list) {
+        return list.isEmpty() ? null : list;
+    }
+
     enum JvmElementType {
         background, scenario
     }
@@ -103,9 +107,9 @@ final class CucumberJvmJson {
             this.name = requireNonNull(name);
             this.description = requireNonNull(description);
             this.steps = requireNonNull(steps);
-            this.before = before;
-            this.after = after;
-            this.tags = tags;
+            this.before = nullIfEmpty(before);
+            this.after = nullIfEmpty(after);
+            this.tags = nullIfEmpty(tags);
         }
 
         public String getStart_timestamp() {
@@ -177,10 +181,10 @@ final class CucumberJvmJson {
             this.result = requireNonNull(result);
             this.doc_string = doc_string;
             this.rows = rows;
-            this.before = before;
-            this.after = after;
-            this.embeddings = embeddings;
-            this.output = output;
+            this.before = nullIfEmpty(before);
+            this.after = nullIfEmpty(after);
+            this.embeddings = nullIfEmpty(embeddings);
+            this.output = nullIfEmpty(output);
         }
 
         public String getKeyword() {
@@ -333,8 +337,8 @@ final class CucumberJvmJson {
         JvmHook(JvmMatch match, JvmResult result, List<JvmEmbedding> embeddings, List<String> output) {
             this.match = requireNonNull(match);
             this.result = requireNonNull(result);
-            this.embeddings = embeddings;
-            this.output = output;
+            this.embeddings = nullIfEmpty(embeddings);
+            this.output = nullIfEmpty(output);
         }
 
         public JvmMatch getMatch() {

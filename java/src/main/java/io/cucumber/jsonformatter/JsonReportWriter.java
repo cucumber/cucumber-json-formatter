@@ -5,7 +5,9 @@ import io.cucumber.jsonformatter.CucumberJvmJson.JvmDataTableRow;
 import io.cucumber.jsonformatter.CucumberJvmJson.JvmDocString;
 import io.cucumber.jsonformatter.CucumberJvmJson.JvmElement;
 import io.cucumber.jsonformatter.CucumberJvmJson.JvmElementType;
+import io.cucumber.jsonformatter.CucumberJvmJson.JvmEmbedding;
 import io.cucumber.jsonformatter.CucumberJvmJson.JvmFeature;
+import io.cucumber.jsonformatter.CucumberJvmJson.JvmHook;
 import io.cucumber.jsonformatter.CucumberJvmJson.JvmLocation;
 import io.cucumber.jsonformatter.CucumberJvmJson.JvmLocationTag;
 import io.cucumber.jsonformatter.CucumberJvmJson.JvmMatch;
@@ -87,10 +89,6 @@ final class JsonReportWriter {
     JsonReportWriter(Query query, Function<URI, String> uriFormatter) {
         this.query = requireNonNull(query);
         this.uriFormatter = requireNonNull(uriFormatter);
-    }
-
-    private static <T> List<T> nullIfEmpty(List<T> list) {
-        return list.isEmpty() ? null : list;
     }
 
     private String formatTimeStamp(Timestamp instant) {
@@ -258,9 +256,9 @@ final class JsonReportWriter {
             data.pickle.getName(),
             scenario.getDescription() == null ? "" : scenario.getDescription(),
             createTestSteps(data, scenarioTestStepsFinished),
-            nullIfEmpty(createHookSteps(data.testStepData.beforeTestCaseSteps)),
-            nullIfEmpty(createHookSteps(data.testStepData.afterTestCaseSteps)),
-            nullIfEmpty(createJvmTags(data.pickle)));
+            createHookSteps(data.testStepData.beforeTestCaseSteps),
+            createHookSteps(data.testStepData.afterTestCaseSteps),
+            createJvmTags(data.pickle));
     }
 
     private List<JvmTag> createJvmTags(Pickle pickle) {
@@ -274,7 +272,7 @@ final class JsonReportWriter {
         return new JvmTag(pickleTag.getName());
     }
 
-    private List<CucumberJvmJson.JvmHook> createHookSteps(List<TestStepFinished> testStepsFinished) {
+    private List<JvmHook> createHookSteps(List<TestStepFinished> testStepsFinished) {
         return testStepsFinished.stream()
                 .map(this::createJvmHook)
                 .filter(Optional::isPresent)
@@ -282,15 +280,15 @@ final class JsonReportWriter {
                 .collect(toList());
     }
 
-    private Optional<CucumberJvmJson.JvmHook> createJvmHook(TestStepFinished testStepFinished) {
+    private Optional<JvmHook> createJvmHook(TestStepFinished testStepFinished) {
         List<Attachment> attachments = query.findAttachmentsBy(testStepFinished);
         return query.findTestStepBy(testStepFinished)
                 .flatMap(testStep -> query.findHookBy(testStep)
-                        .map(hook -> new CucumberJvmJson.JvmHook(
+                        .map(hook -> new JvmHook(
                                 createJvmMatch(testStep),
                                 createJvmResult(testStepFinished.getTestStepResult()),
-                                nullIfEmpty(createEmbeddings(attachments)),
-                                nullIfEmpty(createOutput(attachments)))));
+                                createEmbeddings(attachments),
+                                createOutput(attachments))));
     }
 
     private JvmResult createJvmResult(TestStepResult result) {
@@ -308,10 +306,10 @@ final class JsonReportWriter {
         return duration.isZero() ? null : duration.toNanos();
     }
 
-    private List<CucumberJvmJson.JvmEmbedding> createEmbeddings(List<Attachment> attachments) {
+    private List<JvmEmbedding> createEmbeddings(List<Attachment> attachments) {
         return attachments.stream()
                 .filter(attachment -> attachment.getContentEncoding() == BASE64)
-                .map(attachment -> new CucumberJvmJson.JvmEmbedding(
+                .map(attachment -> new JvmEmbedding(
                     attachment.getMediaType(),
                     attachment.getBody(),
                     attachment.getFileName().orElse(null)))
@@ -383,10 +381,10 @@ final class JsonReportWriter {
                                     createJvmResult(testStepFinished.getTestStepResult()),
                                     createJvmDocString(step),
                                     createJvmDataTableRows(step),
-                                    nullIfEmpty(createHookSteps(beforeStepHooks)),
-                                    nullIfEmpty(createHookSteps(afterStepHooks)),
-                                    nullIfEmpty(createEmbeddings(attachments)),
-                                    nullIfEmpty(createOutput(attachments))
+                                    createHookSteps(beforeStepHooks),
+                                    createHookSteps(afterStepHooks),
+                                    createEmbeddings(attachments),
+                                    createOutput(attachments)
                                 ))));
     }
 
