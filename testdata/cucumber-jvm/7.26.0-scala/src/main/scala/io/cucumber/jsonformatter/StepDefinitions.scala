@@ -15,6 +15,14 @@ class StepDefinitions extends ScalaDsl with EN {
   After("@failing_after") { scenario: Scenario =>
     throw new RuntimeException("failing after hook")
   }
+  
+  BeforeStep("@failing_before_step") { scenario: Scenario =>
+    throw new RuntimeException("failing before step hook")
+  }
+
+  AfterStep("@failing_after_step") { scenario: Scenario =>
+    throw new RuntimeException("failing after step hook")
+  }
 
   Given("^.*pass.*$") { () =>
 
