@@ -130,6 +130,9 @@
                         <version>1.2.3</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <mutationThreshold>100</mutationThreshold>
+                </configuration>
             </plugin>
         </plugins>
     </build>
