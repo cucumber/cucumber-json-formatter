@@ -44,6 +44,7 @@ class MessagesToJsonWriterAcceptanceTest {
         cases.addAll(compatibilityKit());
         cases.addAll(TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java/testdata"));
         cases.addAll(TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-java8/testdata"));
+        cases.addAll(TestCase.fromDirectory("../testdata/cucumber-jvm/7.26.0-scala/testdata"));
         return cases;
     }
 
@@ -114,9 +115,15 @@ class MessagesToJsonWriterAcceptanceTest {
         private final Path source;
         private final Path expected;
         private final String name;
+        private final String group;
 
         TestCase(Path source) {
             this.source = source;
+            String parent = source.getParent().getFileName().toString();
+            if (parent.equals("testdata")) {
+                parent = source.getParent().getParent().getFileName().toString();
+            }
+            this.group = parent;
             String fileName = source.getFileName().toString();
             this.name = fileName.substring(0, fileName.lastIndexOf(".ndjson"));
             // Each cucumber has a different dialect
@@ -135,7 +142,7 @@ class MessagesToJsonWriterAcceptanceTest {
 
         @Override
         public String toString() {
-            return name;
+            return group + "/" + name;
         }
 
         @Override

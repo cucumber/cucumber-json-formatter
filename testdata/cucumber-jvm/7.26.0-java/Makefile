@@ -1,1 +1,1 @@
-include $(dir $(lastword $(MAKEFILE_LIST)))/../default.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))/../default-java.mk
