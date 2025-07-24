@@ -1,6 +1,8 @@
 package io.cucumber.jsonschema;
 
 
+import io.cucumber.datatable.DataTable;
+import io.cucumber.docstring.DocString;
 import io.cucumber.java8.En;
 import io.cucumber.java8.PendingException;
 
@@ -26,6 +28,14 @@ public class StepDefinitions implements En {
         });
 
         Given("^.*pass.*$", () -> {
+
+        });
+
+        Given("^.*docstring.*$", (DocString string) -> {
+
+        });
+
+        Given("^.*datatable.*$", (DataTable table) -> {
 
         });
 

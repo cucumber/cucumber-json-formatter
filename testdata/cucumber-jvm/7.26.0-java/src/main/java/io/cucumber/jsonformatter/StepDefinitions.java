@@ -1,5 +1,7 @@
 package io.cucumber.jsonformatter;
 
+import io.cucumber.datatable.DataTable;
+import io.cucumber.docstring.DocString;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.BeforeStep;
 import io.cucumber.java.PendingException;
@@ -30,28 +32,36 @@ public class StepDefinitions {
         throw new RuntimeException("failing after hook");
     }
 
-    @Given("/.*pass.*/")
+    @Given("^.*pass.*$")
     public void passing_step() {
     }
+    
+    @Given("^.*docstring.*$")
+    public void passing_step(DocString string) {
+    }
+    
+    @Given("^.*datatable.*$")
+    public void passing_step(DataTable table) {
+    }
 
-    @Given("/.*pending.*/")
+    @Given("^.*pending.*$")
     public void pending_step() {
         throw new PendingException();
     }
 
-    @Given("/.*fail.*/")
+    @Given("^.*fail.*$")
     public void failing_step() {
         throw new RuntimeException("this step failed");
     }
 
-    @Given("/.*decaying.*/")
+    @Given("^.*decaying.*$")
     public void decaying_step() {
         boolean failing = decay > 0;
         decay++;
         if (failing) throw new RuntimeException("Decayed");
     }
 
-    @Given("/I have (\\d+) cukes in my (.*)/")
+    @Given("^I have (\\d+) cukes in my (.*)$")
     public void cukes_in_something(int count, String something) {
 
     }

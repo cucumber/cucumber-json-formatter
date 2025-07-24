@@ -1,6 +1,8 @@
 package io.cucumber.jsonformatter
 
-import io.cucumber.scala.{EN, ScalaDsl, Scenario, PendingException}
+import io.cucumber.docstring.DocString
+import io.cucumber.datatable.DataTable
+import io.cucumber.scala.{EN, PendingException, ScalaDsl, Scenario}
 
 private object StepDefinitions {
   var decay = 0;
@@ -25,6 +27,14 @@ class StepDefinitions extends ScalaDsl with EN {
   }
 
   Given("^.*pass.*$") { () =>
+
+  }
+
+  Given("^.*docstring.*$") { (string: DocString) =>
+
+  }
+
+  Given("^.*datatable.*$") { (table: DataTable) =>
 
   }
 
