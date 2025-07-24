@@ -1,0 +1,231 @@
+{
+  "$ref": "#/definitions/BehaveJson",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "BehaveJson": {
+      "items": {
+        "$ref": "#/definitions/Feature"
+      },
+      "type": "array"
+    },
+    "Argument": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "original": {
+          "type": "string"
+        },
+        "value": {}
+      },
+      "required": [
+        "name",
+        "value",
+        "original"
+      ],
+      "type": "object"
+    },
+    "Element": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/Status"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/definitions/Step"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "type": {
+          "enum": [
+            "background",
+            "scenario"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "steps",
+        "type",
+        "name",
+        "keyword",
+        "location"
+      ],
+      "type": "object"
+    },
+    "Feature": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "elements": {
+          "items": {
+            "$ref": "#/definitions/Element"
+          },
+          "type": "array"
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/Status"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "location",
+        "keyword",
+        "name",
+        "elements",
+        "tags"
+      ],
+      "type": "object"
+    },
+    "Match": {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "items": {
+            "$ref": "#/definitions/Argument"
+          },
+          "type": "array"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "location",
+        "arguments"
+      ],
+      "type": "object"
+    },
+    "Result": {
+      "additionalProperties": false,
+      "properties": {
+        "duration": {
+          "type": "number"
+        },
+        "error_message": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/definitions/Status"
+        }
+      },
+      "required": [
+        "status",
+        "duration"
+      ],
+      "type": "object"
+    },
+    "Row": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "Status": {
+      "enum": [
+        "passed",
+        "failed",
+        "skipped",
+        "undefined"
+      ],
+      "type": "string"
+    },
+    "Step": {
+      "additionalProperties": false,
+      "properties": {
+        "keyword": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "match": {
+          "$ref": "#/definitions/Match"
+        },
+        "name": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/definitions/Result"
+        },
+        "step_type": {
+          "type": "string"
+        },
+        "table": {
+          "$ref": "#/definitions/Table"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "step_type",
+        "name",
+        "keyword",
+        "location"
+      ],
+      "type": "object"
+    },
+    "Table": {
+      "additionalProperties": false,
+      "properties": {
+        "rows": {
+          "items": {
+            "$ref": "#/definitions/Row"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "rows"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,366 @@
+{
+  "$ref": "#/definitions/CucumberJvmJson",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "CucumberJvmJson": {
+      "items": {
+        "$ref": "#/definitions/JvmFeature"
+      },
+      "type": "array"
+    },
+    "JvmArgument": {
+      "additionalProperties": false,
+      "properties": {
+        "offset": {
+          "type": "number"
+        },
+        "val": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "val",
+        "offset"
+      ],
+      "type": "object"
+    },
+    "JvmDataTableRow": {
+      "additionalProperties": false,
+      "properties": {
+        "cells": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "cells"
+      ],
+      "type": "object"
+    },
+    "JvmDocString": {
+      "additionalProperties": false,
+      "properties": {
+        "content_type": {
+          "type": "string"
+        },
+        "line": {
+          "type": "number"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "line",
+        "value"
+      ],
+      "type": "object"
+    },
+    "JvmElement": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "items": {
+            "$ref": "#/definitions/JvmHook"
+          },
+          "type": "array"
+        },
+        "before": {
+          "items": {
+            "$ref": "#/definitions/JvmHook"
+          },
+          "type": "array"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "line": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "start_timestamp": {
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/definitions/JvmStep"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "items": {
+            "$ref": "#/definitions/JvmTag"
+          },
+          "type": "array"
+        },
+        "type": {
+          "enum": [
+            "background",
+            "scenario"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "line",
+        "type",
+        "keyword",
+        "name",
+        "description",
+        "steps"
+      ],
+      "type": "object"
+    },
+    "JvmEmbedding": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "mime_type": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "mime_type",
+        "data"
+      ],
+      "type": "object"
+    },
+    "JvmFeature": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "elements": {
+          "items": {
+            "$ref": "#/definitions/JvmElement"
+          },
+          "type": "array"
+        },
+        "id": {
+          "type": "string"
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "line": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tags": {
+          "items": {
+            "$ref": "#/definitions/JvmLocationTag"
+          },
+          "type": "array"
+        },
+        "uri": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "id",
+        "line",
+        "keyword",
+        "name",
+        "description",
+        "elements"
+      ],
+      "type": "object"
+    },
+    "JvmHook": {
+      "additionalProperties": false,
+      "properties": {
+        "embeddings": {
+          "items": {
+            "$ref": "#/definitions/JvmEmbedding"
+          },
+          "type": "array"
+        },
+        "match": {
+          "$ref": "#/definitions/JvmMatch"
+        },
+        "output": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "result": {
+          "$ref": "#/definitions/JvmResult"
+        }
+      },
+      "required": [
+        "match",
+        "result"
+      ],
+      "type": "object"
+    },
+    "JvmLocation": {
+      "additionalProperties": false,
+      "properties": {
+        "column": {
+          "type": "number"
+        },
+        "line": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "line",
+        "column"
+      ],
+      "type": "object"
+    },
+    "JvmLocationTag": {
+      "additionalProperties": false,
+      "properties": {
+        "location": {
+          "$ref": "#/definitions/JvmLocation"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "location"
+      ],
+      "type": "object"
+    },
+    "JvmMatch": {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "items": {
+            "$ref": "#/definitions/JvmArgument"
+          },
+          "type": "array"
+        },
+        "location": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JvmResult": {
+      "additionalProperties": false,
+      "properties": {
+        "duration": {
+          "type": "number"
+        },
+        "error_message": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/JvmStatus"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "JvmStatus": {
+      "enum": [
+        "passed",
+        "failed",
+        "skipped",
+        "undefined",
+        "pending"
+      ],
+      "type": "string"
+    },
+    "JvmStep": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "array": {
+            "$ref": "#/definitions/JvmHook"
+          }
+        },
+        "before": {
+          "array": {
+            "$ref": "#/definitions/JvmHook"
+          }
+        },
+        "doc_string": {
+          "$ref": "#/definitions/JvmDocString"
+        },
+        "embeddings": {
+          "items": {
+            "$ref": "#/definitions/JvmEmbedding"
+          },
+          "type": "array"
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "line": {
+          "type": "number"
+        },
+        "match": {
+          "$ref": "#/definitions/JvmMatch"
+        },
+        "name": {
+          "type": "string"
+        },
+        "output": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "result": {
+          "$ref": "#/definitions/JvmResult"
+        },
+        "rows": {
+          "items": {
+            "$ref": "#/definitions/JvmDataTableRow"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "keyword",
+        "line",
+        "name",
+        "result"
+      ],
+      "type": "object"
+    },
+    "JvmTag": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}

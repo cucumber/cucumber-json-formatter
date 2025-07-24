@@ -1,0 +1,15 @@
+{
+  "name": "demo-formatter-testdata",
+  "version": "1.0.0",
+  "description": "The demo formatter uses some test data for acceptance testing.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node_modules/.bin/shx cp node_modules/@cucumber/json-schema/schemas/*.json ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/json-schema": "^0.2.1",
+    "shx": "^0.4.0"
+  }
+}
