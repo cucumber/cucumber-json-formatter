@@ -1,4 +1,4 @@
-package io.cucumber.jsonschema;
+package io.cucumber.jsonformatter;
 
 
 import io.cucumber.datatable.DataTable;

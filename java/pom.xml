@@ -131,7 +131,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <mutationThreshold>94</mutationThreshold>
+                    <mutationThreshold>95</mutationThreshold>
                 </configuration>
             </plugin>
         </plugins>
