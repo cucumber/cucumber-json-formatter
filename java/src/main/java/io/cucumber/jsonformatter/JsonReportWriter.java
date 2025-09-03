@@ -409,7 +409,7 @@ final class JsonReportWriter {
         Group group = argument.getGroup();
         return new JvmArgument(
                 group.getValue().orElse(null),
-                group.getStart().orElse(-1L));
+                group.getStart().orElse(null));
     }
 
     private List<JvmDataTableRow> createJvmDataTableRows(Step step) {
