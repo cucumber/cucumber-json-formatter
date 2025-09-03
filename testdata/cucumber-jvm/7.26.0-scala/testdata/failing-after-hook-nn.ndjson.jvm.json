@@ -1,1 +1,53 @@
-[{"line":1,"elements":[{"start_timestamp":"2025-09-03T15:28:06.881Z","line":3,"name":"","description":"","id":";","after":[{"result":{"error_message":"java.lang.RuntimeException: failing after hook\n\tat io.cucumber.jsonformatter.StepDefinitions.$anonfun$new$2(StepDefinitions.scala:18)\n","duration":1841465,"status":"failed"},"match":{"location":"io.cucumber.jsonformatter.StepDefinitions.<init>(StepDefinitions.scala:17)"}}],"type":"scenario","keyword":"Scenario","steps":[{"result":{"duration":2135793,"status":"passed"},"line":4,"name":"this step passes","match":{"location":"io.cucumber.jsonformatter.StepDefinitions.<init>(StepDefinitions.scala:29)"},"keyword":"Given "}],"tags":[{"name":"@failing_after"}]}],"name":"","description":"","id":"","keyword":"Feature","uri":"file:///home/mpkorstanje/Projects/cucumber/json-formatter/testdata/cucumber-jvm/7.26.0-scala/../../features/failing-after-hook-nn.feature","tags":[]}]
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2025-07-26T22:09:27.791Z",
+        "line": 3,
+        "name": "",
+        "description": "",
+        "id": ";",
+        "after": [
+          {
+            "result": {
+              "error_message": "java.lang.RuntimeException: failing after hook\n\tat io.cucumber.jsonformatter.StepDefinitions.$anonfun$new$2(StepDefinitions.scala:18)\n",
+              "duration": 2500821,
+              "status": "failed"
+            },
+            "match": {
+              "location": "io.cucumber.jsonformatter.StepDefinitions.<init>(StepDefinitions.scala:17)"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 2630187,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "this step passes",
+            "match": {
+              "location": "io.cucumber.jsonformatter.StepDefinitions.<init>(StepDefinitions.scala:29)"
+            },
+            "keyword": "Given "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@failing_after"
+          }
+        ]
+      }
+    ],
+    "name": "",
+    "description": "",
+    "id": "",
+    "keyword": "Feature",
+    "uri": "file:///home/mpkorstanje/Projects/cucumber/json-formatter/testdata/cucumber-jvm/7.26.0-scala/../../features/failing-after-hook-nn.feature",
+    "tags": []
+  }
+]
