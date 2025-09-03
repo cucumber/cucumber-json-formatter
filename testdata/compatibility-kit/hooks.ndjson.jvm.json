@@ -71,7 +71,7 @@
             "result": {
               "duration": 1000000,
               "status": "failed",
-              "error_message": "samples/hooks/hooks.feature:8"
+              "error_message": "Error: Exception in step\nsamples/hooks/hooks.feature:8"
             }
           }
         ],

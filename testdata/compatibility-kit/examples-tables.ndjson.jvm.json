@@ -208,7 +208,7 @@
             "result": {
               "duration": 1000000,
               "status": "failed",
-              "error_message": "samples/examples-tables/examples-tables.feature:14"
+              "error_message": "AssertionError: Expected values to be strictly equal:\n\n-8 !== 0\n\nsamples/examples-tables/examples-tables.feature:14"
             }
           }
         ],
@@ -279,7 +279,7 @@
             "result": {
               "duration": 1000000,
               "status": "failed",
-              "error_message": "samples/examples-tables/examples-tables.feature:14"
+              "error_message": "AssertionError: Expected values to be strictly equal:\n\n-1 !== 0\n\nsamples/examples-tables/examples-tables.feature:14"
             }
           }
         ],
