@@ -36,7 +36,7 @@
             "result": {
               "duration": 1000000,
               "status": "failed",
-              "error_message": "samples/hooks-conditional/hooks-conditional.feature:7"
+              "error_message": "Error: Exception in conditional hook\nsamples/hooks-conditional/hooks-conditional.feature:7"
             }
           }
         ],
@@ -76,7 +76,7 @@
             "result": {
               "duration": 1000000,
               "status": "failed",
-              "error_message": "samples/hooks-conditional/hooks-conditional.feature:11"
+              "error_message": "Error: Exception in conditional hook\nsamples/hooks-conditional/hooks-conditional.feature:11"
             }
           }
         ],

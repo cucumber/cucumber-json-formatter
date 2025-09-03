@@ -53,7 +53,7 @@ public class StepDefinitions implements En {
             if (failing) throw new RuntimeException("Decayed");
         });
 
-        Given("^I have (\\d+) cukes in my (.*)$", (Integer count, String something) -> {
+        Given("^I have (\\d+) cukes(?: in my (.*))?$", (Integer count, String something) -> {
             
         });
     }

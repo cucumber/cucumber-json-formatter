@@ -52,7 +52,7 @@ class StepDefinitions extends ScalaDsl with EN {
     if (failing) throw new RuntimeException("Decayed")
   }
 
-  Given("^I have (\\d+) cukes in my (.*)$") { (count: Integer, something: String) =>
+  Given("^I have (\\d+) cukes(?: in my (.*))?$") { (count: Integer, something: String) =>
 
   }
 }

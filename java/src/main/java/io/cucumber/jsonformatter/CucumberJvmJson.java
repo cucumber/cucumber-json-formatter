@@ -255,8 +255,8 @@ final class CucumberJvmJson {
         private final Number offset;
 
         JvmArgument(String val, Number offset) {
-            this.val = requireNonNull(val);
-            this.offset = requireNonNull(offset);
+            this.val = val;
+            this.offset = offset;
         }
 
         public String getVal() {
