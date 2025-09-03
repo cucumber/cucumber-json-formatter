@@ -37,7 +37,7 @@
         ]
       },
       {
-        "start_timestamp": "1970-01-01T00:00:00.006Z",
+        "start_timestamp": "1970-01-01T00:00:00.005Z",
         "line": 10,
         "id": "examples-tables---with-attachments;attaching-images-in-an-examples-table;;3",
         "type": "scenario",
