@@ -435,6 +435,8 @@ final class JsonReportWriter {
 
     private List<JvmArgument> createJvmArguments(TestStep step) {
         return step.getStepMatchArgumentsLists()
+                // Only include arguments for unambiguous steps
+                .filter(stepMatchArgumentsLists -> stepMatchArgumentsLists.size() == 1)
                 .map(argumentsLists -> argumentsLists.stream()
                         .map(StepMatchArgumentsList::getStepMatchArguments)
                         .flatMap(Collection::stream)
