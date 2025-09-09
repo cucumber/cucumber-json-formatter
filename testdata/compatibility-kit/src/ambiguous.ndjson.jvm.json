@@ -19,22 +19,7 @@
           {
             "keyword": "Given ",
             "line": 6,
-            "match": {
-              "arguments": [
-                {
-                  "val": "step",
-                  "offset": 2
-                },
-                {
-                  "val": "",
-                  "offset": 12
-                },
-                {
-                  "val": "multiple definitions",
-                  "offset": 12
-                }
-              ]
-            },
+            "match": { },
             "name": "a step with multiple definitions",
             "result": {
               "status": "ambiguous"

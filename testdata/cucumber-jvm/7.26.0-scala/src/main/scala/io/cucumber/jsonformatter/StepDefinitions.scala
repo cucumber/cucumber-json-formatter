@@ -67,4 +67,13 @@ class StepDefinitions extends ScalaDsl with EN {
     StepDefinitions.scenario.attach("Hello world", "application/plain", "hello.txt");
     StepDefinitions.scenario.attach("Hello world".getBytes(UTF_8), "application/plain", "hello.bin");
   }
+
+  Given("^.*ambiguous.*$") { () =>
+
+  }
+  
+  Given("^.*ambiguous step.*$") { () =>
+
+  }
+
 }

@@ -17,7 +17,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class StepDefinitions {
     private static int decay = 0;
     private Scenario scenario;
-    
+
     @Before("@attachments")
     public void tagged_passing_before_attachments(Scenario scenario) {
         this.scenario = scenario;
@@ -46,11 +46,11 @@ public class StepDefinitions {
     @Given("^.*pass.*$")
     public void passing_step() {
     }
-    
+
     @Given("^.*docstring.*$")
     public void passing_step(DocString string) {
     }
-    
+
     @Given("^.*datatable.*$")
     public void passing_step(DataTable table) {
     }
@@ -82,6 +82,16 @@ public class StepDefinitions {
         scenario.log("Hello world");
         scenario.attach("Hello world", "application/plain", "hello.txt");
         scenario.attach("Hello world".getBytes(UTF_8), "application/plain", "hello.bin");
+    }
+
+    @Given("^.*ambiguous.*$")
+    public void ambiguous_step_a() {
+
+    }
+
+    @Given("^.*ambiguous step.*$")
+    public void ambiguous_step_b() {
+
     }
 
 }
