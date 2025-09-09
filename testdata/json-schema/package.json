@@ -4,12 +4,12 @@
   "description": "The demo formatter uses some test data for acceptance testing.",
   "main": "index.js",
   "scripts": {
-    "postinstall": "node_modules/.bin/shx cp node_modules/@cucumber/json-schema/schemas/*.json ."
+    "postinstall": "node_modules/.bin/shx cp node_modules/@cucumber/json-schema/schemas/*.json src/"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@cucumber/json-schema": "^0.2.2",
+    "@cucumber/json-schema": "^0.2.3",
     "shx": "^0.4.0"
   }
 }
