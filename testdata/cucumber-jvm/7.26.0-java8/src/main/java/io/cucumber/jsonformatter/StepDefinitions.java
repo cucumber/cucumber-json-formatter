@@ -5,11 +5,19 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.docstring.DocString;
 import io.cucumber.java8.En;
 import io.cucumber.java8.PendingException;
+import io.cucumber.java8.Scenario;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class StepDefinitions implements En {
     private static int decay = 0;
-
+    private Scenario scenario;
+    
     public StepDefinitions() {
+        Before("@attachments", (Scenario scenario) -> {
+            this.scenario = scenario;
+        });
+
         Before("@failing_before", () -> {
             throw new RuntimeException("failing before hook");
         });
@@ -55,6 +63,12 @@ public class StepDefinitions implements En {
 
         Given("^I have (\\d+) cukes(?: in my (.*))?$", (Integer count, String something) -> {
             
+        });
+
+        Given("^.*attach.*$", () -> {
+            scenario.log("Hello world");
+            scenario.attach("Hello world", "application/plain", "hello.txt");
+            scenario.attach("Hello world".getBytes(UTF_8), "application/plain", "hello.bin");
         });
     }
 }

@@ -3,17 +3,23 @@ package io.cucumber.jsonformatter
 import io.cucumber.docstring.DocString
 import io.cucumber.datatable.DataTable
 import io.cucumber.scala.{EN, PendingException, ScalaDsl, Scenario}
+import java.nio.charset.StandardCharsets.UTF_8;
 
 private object StepDefinitions {
   var decay = 0;
+  var scenario: Scenario = null;
 }
 
 class StepDefinitions extends ScalaDsl with EN {
 
+  Before("@attachments") { scenario: Scenario =>
+    StepDefinitions.scenario = scenario;
+  }
+
   Before("@failing_before") { scenario: Scenario =>
     throw new RuntimeException("failing before hook")
   }
-
+  
   After("@failing_after") { scenario: Scenario =>
     throw new RuntimeException("failing after hook")
   }
@@ -54,5 +60,11 @@ class StepDefinitions extends ScalaDsl with EN {
 
   Given("^I have (\\d+) cukes(?: in my (.*))?$") { (count: Integer, something: String) =>
 
+  }
+
+  Given("^.*attach.*$") { () =>
+    StepDefinitions.scenario.log("Hello world");
+    StepDefinitions.scenario.attach("Hello world", "application/plain", "hello.txt");
+    StepDefinitions.scenario.attach("Hello world".getBytes(UTF_8), "application/plain", "hello.bin");
   }
 }

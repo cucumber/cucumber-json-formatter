@@ -7,10 +7,21 @@ import io.cucumber.java.BeforeStep;
 import io.cucumber.java.PendingException;
 import io.cucumber.java.Before;
 import io.cucumber.java.After;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
+
+import java.nio.charset.StandardCharsets;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class StepDefinitions {
     private static int decay = 0;
+    private Scenario scenario;
+    
+    @Before("@attachments")
+    public void tagged_passing_before_attachments(Scenario scenario) {
+        this.scenario = scenario;
+    }
 
     @Before("@failing_before")
     public void tagged_failing_before_hook() {
@@ -65,4 +76,12 @@ public class StepDefinitions {
     public void cukes_in_something(int count, String something) {
 
     }
+
+    @Given("^.*attach.*$")
+    public void attaching_step() {
+        scenario.log("Hello world");
+        scenario.attach("Hello world", "application/plain", "hello.txt");
+        scenario.attach("Hello world".getBytes(UTF_8), "application/plain", "hello.bin");
+    }
+
 }
