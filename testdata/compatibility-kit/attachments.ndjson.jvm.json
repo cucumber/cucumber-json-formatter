@@ -37,8 +37,11 @@
               "duration": 1000000,
               "status": "passed"
             },
-            "output": [
-              "hello"
+            "embeddings": [
+              {
+                "mime_type": "application/octet-stream",
+                "data": "aGVsbG8="
+              }
             ]
           }
         ]
@@ -131,8 +134,11 @@
               "line": 25,
               "value": "{\"message\": \"The <b>big</b> question\", \"foo\": \"bar\"}"
             },
-            "output": [
-              "{\"message\": \"The <b>big</b> question\", \"foo\": \"bar\"}"
+            "embeddings": [
+              {
+                "mime_type": "application/json",
+                "data": "eyJtZXNzYWdlIjogIlRoZSA8Yj5iaWc8L2I+IHF1ZXN0aW9uIiwgImZvbyI6ICJiYXIifQ=="
+              }
             ]
           }
         ]
@@ -232,8 +238,11 @@
               "duration": 1000000,
               "status": "passed"
             },
-            "output": [
-              "https://cucumber.io"
+            "embeddings": [
+              {
+                "mime_type": "text/uri-list",
+                "data": "aHR0cHM6Ly9jdWN1bWJlci5pbw=="
+              }
             ]
           }
         ]

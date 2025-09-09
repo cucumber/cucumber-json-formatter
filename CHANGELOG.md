@@ -6,10 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Fix attachment rendering ([#12](https://github.com/cucumber/cucumber-json-formatter/pull/7))
 
 ## [0.1.2] - 2025-09-03
 ### Fixed
-- `JvmArgument.val` and `JvmArgument.offset` are not required in practice  ([#7](https://github.com/cucumber/cucumber-json-formatter/pull/7) M.P. Korstanje)
+- `JvmArgument.val` and `JvmArgument.offset` are not required in practice  ([#7](https://github.com/cucumber/cucumber-json-formatter/pull/7))
 
 ## [0.1.1] - 2025-07-24
 ### Fixed
@@ -17,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2025-07-24
 ### Added
-- Java implementation ([#1](https://github.com/cucumber/cucumber-json-formatter/pull/1) M.P. Korstanje)
+- Java implementation ([#1](https://github.com/cucumber/cucumber-json-formatter/pull/1))
 
 [Unreleased]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.1.2...HEAD
 [0.1.2]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.1.1...v0.1.2
