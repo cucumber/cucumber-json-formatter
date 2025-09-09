@@ -19,10 +19,11 @@ final class CucumberJvmJson {
     }
     enum JvmStatus {
         passed,
-        failed,
         skipped,
+        pending,
         undefined,
-        pending
+        ambiguous,
+        failed
     }
 
     static class JvmFeature {

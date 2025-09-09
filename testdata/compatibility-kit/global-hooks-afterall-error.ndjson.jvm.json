@@ -5,11 +5,11 @@
     "id": "global-hooks---afterall-error",
     "keyword": "Feature",
     "name": "Global hooks - AfterAll error",
-    "description": "  Errors in AfterAll hooks cause the whole test run to fail, and no subsequent AfterAll hooks are executed.",
+    "description": "  Errors in AfterAll hooks cause the whole test run to fail. The remaining AfterAll hooks will still run, in an\n  effort to clean up resources as well as possible.",
     "elements": [
       {
         "start_timestamp": "1970-01-01T00:00:00.005Z",
-        "line": 4,
+        "line": 5,
         "id": "global-hooks---afterall-error;a-passing-scenario",
         "type": "scenario",
         "keyword": "Scenario",
@@ -18,7 +18,7 @@
         "steps": [
           {
             "keyword": "When ",
-            "line": 5,
+            "line": 6,
             "match": {
               "location": "samples/global-hooks-afterall-error/global-hooks-afterall-error.ts:11"
             },
