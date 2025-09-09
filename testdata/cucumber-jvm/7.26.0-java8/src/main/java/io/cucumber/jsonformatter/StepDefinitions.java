@@ -70,5 +70,13 @@ public class StepDefinitions implements En {
             scenario.attach("Hello world", "application/plain", "hello.txt");
             scenario.attach("Hello world".getBytes(UTF_8), "application/plain", "hello.bin");
         });
+
+        Given("^.*ambiguous.*$", () -> {
+
+        });
+
+        Given("^.*ambiguous step.*$", () -> {
+
+        });
     }
 }
