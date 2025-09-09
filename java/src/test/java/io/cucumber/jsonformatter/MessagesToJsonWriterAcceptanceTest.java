@@ -49,7 +49,7 @@ class MessagesToJsonWriterAcceptanceTest {
     }
 
     private static List<TestCase> compatibilityKit() throws IOException {
-        return TestCase.fromDirectory("../testdata/compatibility-kit");
+        return TestCase.fromDirectory("../testdata/compatibility-kit/src");
     }
 
     private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out) throws IOException {
@@ -71,7 +71,7 @@ class MessagesToJsonWriterAcceptanceTest {
     }
 
     private static JsonSchema readJsonSchema() {
-        Path path = Paths.get("../testdata/json-schema/cucumber-jvm.json");
+        Path path = Paths.get("../testdata/json-schema/src/cucumber-jvm.json");
         try (InputStream resource = Files.newInputStream(path)) {
             return JsonSchemaFactory.getInstance(V202012).getSchema(resource);
         } catch (IOException e) {
