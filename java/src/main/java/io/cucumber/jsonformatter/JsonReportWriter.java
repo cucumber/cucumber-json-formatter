@@ -17,6 +17,7 @@ import io.cucumber.jsonformatter.CucumberJvmJson.JvmStep;
 import io.cucumber.jsonformatter.CucumberJvmJson.JvmTag;
 import io.cucumber.messages.Convertor;
 import io.cucumber.messages.types.Attachment;
+import io.cucumber.messages.types.AttachmentContentEncoding;
 import io.cucumber.messages.types.Background;
 import io.cucumber.messages.types.DataTable;
 import io.cucumber.messages.types.DocString;
@@ -55,6 +56,7 @@ import java.time.Duration;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -70,8 +72,7 @@ import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 import static io.cucumber.jsonformatter.IdNamingVisitor.formatId;
-import static io.cucumber.messages.types.AttachmentContentEncoding.BASE64;
-import static io.cucumber.messages.types.AttachmentContentEncoding.IDENTITY;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.emptyList;
 import static java.util.Locale.ROOT;
 import static java.util.Objects.requireNonNull;
@@ -308,19 +309,57 @@ final class JsonReportWriter {
 
     private List<JvmEmbedding> createEmbeddings(List<Attachment> attachments) {
         return attachments.stream()
-                .filter(attachment -> attachment.getContentEncoding() == BASE64)
+                .filter(attachment -> !isTextCucumberLogPlain(attachment.getMediaType()))
                 .map(attachment -> new JvmEmbedding(
                         attachment.getMediaType(),
-                        attachment.getBody(),
+                        // Scenario.attach creates both plain and base64 attachments
+                        encodeBodyAsBase64(attachment),
                         attachment.getFileName().orElse(null)))
                 .collect(toList());
     }
 
+    private static String encodeBodyAsBase64(Attachment attachment) {
+        AttachmentContentEncoding encoding = attachment.getContentEncoding();
+        String body = attachment.getBody();
+        switch (encoding) {
+            case IDENTITY:
+                byte[] bytes = body.getBytes(UTF_8);
+                Base64.Encoder encoder = Base64.getEncoder();
+                return encoder.encodeToString(bytes);
+            case BASE64:
+                return body;
+            default:
+                throw new RuntimeException("Unknown content encoding " + encoding);
+        }
+    }
+
     private List<String> createOutput(List<Attachment> attachments) {
         return attachments.stream()
-                .filter(attachment -> attachment.getContentEncoding() == IDENTITY)
-                .map(Attachment::getBody)
+                // Scenario.log creates text/x.cucumber.log+plain attachments
+                // These are written as plain text output elements in the json report                 
+                .filter(attachment -> isTextCucumberLogPlain(attachment.getMediaType()))
+                // If someone snuck in a text/x.cucumber.log+plain through Scenario.attach(byte[])
+                // we have to decode the body. 
+                .map(JsonReportWriter::encodeBodyAsPlainText)
                 .collect(toList());
+    }
+
+    private static String encodeBodyAsPlainText(Attachment attachment) {
+        AttachmentContentEncoding encoding = attachment.getContentEncoding();
+        String body = attachment.getBody();
+        switch (encoding) {
+            case IDENTITY:
+                return body;
+            case BASE64:
+                Base64.Decoder decoder = Base64.getDecoder();
+                return new String(decoder.decode(body), UTF_8);
+            default:
+                throw new RuntimeException("Unknown content encoding " + encoding);
+        }
+    }
+
+    private static boolean isTextCucumberLogPlain(String mediaType) {
+        return mediaType.equals("text/x.cucumber.log+plain");
     }
 
     private List<JvmLocationTag> createJvmLocationTags(Feature feature) {
