@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_ATTACHMENTS;
-import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_GHERKIN_DOCUMENT;
+import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_GHERKIN_DOCUMENTS;
 import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_HOOKS;
 import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_STEP_DEFINITIONS;
 import static java.util.Objects.requireNonNull;
@@ -30,7 +30,7 @@ public final class MessagesToJsonWriter implements AutoCloseable {
     private final OutputStreamWriter out;
     private final Repository repository = Repository.builder()
             .feature(INCLUDE_ATTACHMENTS, true)
-            .feature(INCLUDE_GHERKIN_DOCUMENT, true)
+            .feature(INCLUDE_GHERKIN_DOCUMENTS, true)
             .feature(INCLUDE_HOOKS, true)
             .feature(INCLUDE_STEP_DEFINITIONS, true)
             .build();
