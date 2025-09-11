@@ -2,6 +2,7 @@ package io.cucumber.jsonformatter;
 
 import io.cucumber.messages.types.Envelope;
 import io.cucumber.query.Query;
+import io.cucumber.query.Repository;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,6 +13,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.function.Function;
 
+import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_ATTACHMENTS;
+import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_GHERKIN_DOCUMENTS;
+import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_HOOKS;
+import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_STEP_DEFINITIONS;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -23,7 +28,13 @@ import static java.util.Objects.requireNonNull;
 public final class MessagesToJsonWriter implements AutoCloseable {
 
     private final OutputStreamWriter out;
-    private final Query query = new Query();
+    private final Repository repository = Repository.builder()
+            .feature(INCLUDE_ATTACHMENTS, true)
+            .feature(INCLUDE_GHERKIN_DOCUMENTS, true)
+            .feature(INCLUDE_HOOKS, true)
+            .feature(INCLUDE_STEP_DEFINITIONS, true)
+            .build();
+    private final Query query = new Query(repository);
     private final Serializer serializer;
     private final Function<URI, String> uriFormatter;
     private boolean streamClosed = false;
@@ -69,7 +80,7 @@ public final class MessagesToJsonWriter implements AutoCloseable {
         if (streamClosed) {
             throw new IOException("Stream closed");
         }
-        query.update(envelope);
+        repository.update(envelope);
     }
 
     /**
