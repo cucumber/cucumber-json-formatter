@@ -6,12 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Fixed
-- Only include match arguments for unambiguous steps ([#9](https://github.com/cucumber/cucumber-json-formatter/pull/9))
 
+## [0.2.0] - 2025-09-11
 ### Changed
 - Update dependency io.cucumber:query to v14.0.1
 - Update dependency `io.cucumber:messages` up to v29 ([#11](https://github.com/cucumber/cucumber-json-formatter/pull/11))
+
+### Fixed
+- Only include match arguments for unambiguous steps ([#9](https://github.com/cucumber/cucumber-json-formatter/pull/9))
 
 ## [0.1.3] - 2025-09-09
 ### Fixed
@@ -29,7 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Java implementation ([#1](https://github.com/cucumber/cucumber-json-formatter/pull/1))
 
-[Unreleased]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.1.0...v0.1.1
