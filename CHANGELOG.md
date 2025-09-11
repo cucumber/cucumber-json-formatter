@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Only include match arguments for unambiguous steps ([#9](https://github.com/cucumber/cucumber-json-formatter/pull/9))
 
 ### Changed
+- Update dependency io.cucumber:query to v14.0.1
 - Update dependency `io.cucumber:messages` up to v29 ([#11](https://github.com/cucumber/cucumber-json-formatter/pull/11))
 
 ## [0.1.3] - 2025-09-09
