@@ -6,10 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Change scope of `com.networknt:json-schema-validator` to `test`
 
 ## [0.2.0] - 2025-09-11
 ### Changed
-- Update dependency io.cucumber:query to v14.0.1
+- Update dependency `io.cucumber:query` to v14.0.1
 - Update dependency `io.cucumber:messages` up to v29 ([#11](https://github.com/cucumber/cucumber-json-formatter/pull/11))
 
 ### Fixed
