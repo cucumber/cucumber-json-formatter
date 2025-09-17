@@ -12,6 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import javax.xml.transform.Source;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,12 +25,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.networknt.schema.SpecVersion.VersionFlag.V202012;
 import static io.cucumber.jsonformatter.Jackson.OBJECT_MAPPER;
 import static io.cucumber.jsonformatter.Jackson.PRETTY_PRINTER;
+import static io.cucumber.jsonformatter.MessageOrderer.simulateParallelExecution;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -53,14 +56,24 @@ class MessagesToJsonWriterAcceptanceTest {
     }
 
     private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out) throws IOException {
+        return writeJsonReport(testCase, out, MessageOrderer.originalOrder());
+    }
+
+    private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out, Consumer<List<Envelope>> orderer) throws IOException {
+        List<Envelope> messages = new ArrayList<>();
         try (InputStream in = Files.newInputStream(testCase.source)) {
             try (NdjsonToMessageIterable envelopes = new NdjsonToMessageIterable(in, deserializer)) {
-                MessagesToJsonWriter.Builder builder = MessagesToJsonWriter.builder(serializer);
-                try (MessagesToJsonWriter writer = builder.build(out)) {
-                    for (Envelope envelope : envelopes) {
-                        writer.write(envelope);
-                    }
+                for (Envelope envelope : envelopes) {
+                    messages.add(envelope);
                 }
+            }
+        }
+        orderer.accept(messages);
+
+        MessagesToJsonWriter.Builder builder = MessagesToJsonWriter.builder(serializer);
+        try (MessagesToJsonWriter writer = builder.build(out)) {
+            for (Envelope envelope : messages) {
+                writer.write(envelope);
             }
         }
         return out;
@@ -83,6 +96,14 @@ class MessagesToJsonWriterAcceptanceTest {
     @MethodSource("all")
     void test(TestCase testCase) throws IOException, JSONException {
         ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream());
+        byte[] expected = Files.readAllBytes(testCase.expected);
+        assertJsonEquals(new String(expected, UTF_8), new String(actual.toByteArray(), UTF_8));
+    }
+
+    @ParameterizedTest
+    @MethodSource("all")
+    void testWithSimulatedParallelExecution(TestCase testCase) throws IOException, JSONException {
+        ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream(), simulateParallelExecution());
         byte[] expected = Files.readAllBytes(testCase.expected);
         assertJsonEquals(new String(expected, UTF_8), new String(actual.toByteArray(), UTF_8));
     }
