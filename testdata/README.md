@@ -14,7 +14,7 @@ nothing changed.
 
 Should there be changes, these tests can be used to update the expected data for
 each implementation:
- * Java: `MessagesToJsonWriterAcceptanceTest.updateExpectedJsonFiles`
+ * Java: `MessagesToJsonWriterAcceptanceTest.updateExpectedFiles`
 
 ## Validation against the Json Schema
 
