@@ -126,7 +126,7 @@ class MessagesToJsonWriterAcceptanceTest {
     @ParameterizedTest
     @MethodSource("compatibilityKit")
     @Disabled
-    void updateExpectedJsonFiles(TestCase testCase) throws IOException {
+    void updateExpectedFiles(TestCase testCase) throws IOException {
         try (OutputStream out = Files.newOutputStream(testCase.expected)) {
             writeJsonReport(testCase, out);
         }
