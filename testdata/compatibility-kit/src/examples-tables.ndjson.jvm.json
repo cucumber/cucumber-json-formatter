@@ -291,128 +291,7 @@
       },
       {
         "start_timestamp": "1970-01-01T00:00:00.033Z",
-        "line": 31,
-        "id": "examples-tables;eating-cucumbers;these-are-undefined-because-the-value-is-not-an-{int};2",
-        "type": "scenario",
-        "keyword": "Scenario Outline",
-        "name": "Eating cucumbers",
-        "description": "",
-        "steps": [
-          {
-            "keyword": "Given ",
-            "line": 12,
-            "match": {
-              "location": "samples/examples-tables/examples-tables.ts:4",
-              "arguments": [
-                {
-                  "val": "12",
-                  "offset": 10
-                }
-              ]
-            },
-            "name": "there are 12 cucumbers",
-            "result": {
-              "duration": 1000000,
-              "status": "passed"
-            }
-          },
-          {
-            "keyword": "When ",
-            "line": 13,
-            "match": { },
-            "name": "I eat banana cucumbers",
-            "result": {
-              "status": "undefined"
-            }
-          },
-          {
-            "keyword": "Then ",
-            "line": 14,
-            "match": {
-              "location": "samples/examples-tables/examples-tables.ts:16",
-              "arguments": [
-                {
-                  "val": "12",
-                  "offset": 14
-                }
-              ]
-            },
-            "name": "I should have 12 cucumbers",
-            "result": {
-              "status": "skipped"
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@undefined"
-          }
-        ]
-      },
-      {
-        "start_timestamp": "1970-01-01T00:00:00.041Z",
-        "line": 32,
-        "id": "examples-tables;eating-cucumbers;these-are-undefined-because-the-value-is-not-an-{int};3",
-        "type": "scenario",
-        "keyword": "Scenario Outline",
-        "name": "Eating cucumbers",
-        "description": "",
-        "steps": [
-          {
-            "keyword": "Given ",
-            "line": 12,
-            "match": {
-              "location": "samples/examples-tables/examples-tables.ts:4",
-              "arguments": [
-                {
-                  "val": "0",
-                  "offset": 10
-                }
-              ]
-            },
-            "name": "there are 0 cucumbers",
-            "result": {
-              "duration": 1000000,
-              "status": "passed"
-            }
-          },
-          {
-            "keyword": "When ",
-            "line": 13,
-            "match": {
-              "location": "samples/examples-tables/examples-tables.ts:12",
-              "arguments": [
-                {
-                  "val": "1",
-                  "offset": 6
-                }
-              ]
-            },
-            "name": "I eat 1 cucumbers",
-            "result": {
-              "duration": 1000000,
-              "status": "passed"
-            }
-          },
-          {
-            "keyword": "Then ",
-            "line": 14,
-            "match": { },
-            "name": "I should have apple cucumbers",
-            "result": {
-              "status": "undefined"
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@undefined"
-          }
-        ]
-      },
-      {
-        "start_timestamp": "1970-01-01T00:00:00.049Z",
-        "line": 41,
+        "line": 35,
         "id": "examples-tables;eating-cucumbers-with-<friends>-friends;;2",
         "type": "scenario",
         "keyword": "Scenario Outline",
@@ -421,7 +300,7 @@
         "steps": [
           {
             "keyword": "Given ",
-            "line": 35,
+            "line": 29,
             "match": {
               "location": "samples/examples-tables/examples-tables.ts:8",
               "arguments": [
@@ -439,7 +318,7 @@
           },
           {
             "keyword": "And ",
-            "line": 36,
+            "line": 30,
             "match": {
               "location": "samples/examples-tables/examples-tables.ts:4",
               "arguments": [
@@ -457,7 +336,7 @@
           },
           {
             "keyword": "Then ",
-            "line": 37,
+            "line": 31,
             "match": {
               "location": "samples/examples-tables/examples-tables.ts:20",
               "arguments": [
@@ -476,8 +355,8 @@
         ]
       },
       {
-        "start_timestamp": "1970-01-01T00:00:00.057Z",
-        "line": 42,
+        "start_timestamp": "1970-01-01T00:00:00.041Z",
+        "line": 36,
         "id": "examples-tables;eating-cucumbers-with-<friends>-friends;;3",
         "type": "scenario",
         "keyword": "Scenario Outline",
@@ -486,7 +365,7 @@
         "steps": [
           {
             "keyword": "Given ",
-            "line": 35,
+            "line": 29,
             "match": {
               "location": "samples/examples-tables/examples-tables.ts:8",
               "arguments": [
@@ -504,7 +383,7 @@
           },
           {
             "keyword": "And ",
-            "line": 36,
+            "line": 30,
             "match": {
               "location": "samples/examples-tables/examples-tables.ts:4",
               "arguments": [
@@ -522,7 +401,7 @@
           },
           {
             "keyword": "Then ",
-            "line": 37,
+            "line": 31,
             "match": {
               "location": "samples/examples-tables/examples-tables.ts:20",
               "arguments": [
@@ -541,8 +420,8 @@
         ]
       },
       {
-        "start_timestamp": "1970-01-01T00:00:00.065Z",
-        "line": 43,
+        "start_timestamp": "1970-01-01T00:00:00.049Z",
+        "line": 37,
         "id": "examples-tables;eating-cucumbers-with-<friends>-friends;;4",
         "type": "scenario",
         "keyword": "Scenario Outline",
@@ -551,7 +430,7 @@
         "steps": [
           {
             "keyword": "Given ",
-            "line": 35,
+            "line": 29,
             "match": {
               "location": "samples/examples-tables/examples-tables.ts:8",
               "arguments": [
@@ -569,7 +448,7 @@
           },
           {
             "keyword": "And ",
-            "line": 36,
+            "line": 30,
             "match": {
               "location": "samples/examples-tables/examples-tables.ts:4",
               "arguments": [
@@ -587,7 +466,7 @@
           },
           {
             "keyword": "Then ",
-            "line": 37,
+            "line": 31,
             "match": {
               "location": "samples/examples-tables/examples-tables.ts:20",
               "arguments": [
