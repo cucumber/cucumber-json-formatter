@@ -4,6 +4,7 @@ import com.networknt.schema.InputFormat;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.ValidationMessage;
+import io.cucumber.compatibilitykit.MessageOrderer;
 import io.cucumber.messages.NdjsonToMessageIterable;
 import io.cucumber.messages.types.Envelope;
 import org.json.JSONException;
@@ -12,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.skyscreamer.jsonassert.JSONAssert;
 
-import javax.xml.transform.Source;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -32,7 +33,6 @@ import java.util.stream.Stream;
 import static com.networknt.schema.SpecVersion.VersionFlag.V202012;
 import static io.cucumber.jsonformatter.Jackson.OBJECT_MAPPER;
 import static io.cucumber.jsonformatter.Jackson.PRETTY_PRINTER;
-import static io.cucumber.jsonformatter.MessageOrderer.simulateParallelExecution;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,6 +41,9 @@ class MessagesToJsonWriterAcceptanceTest {
     private static final NdjsonToMessageIterable.Deserializer deserializer = (json) -> OBJECT_MAPPER.readValue(json, Envelope.class);
     private static final MessagesToJsonWriter.Serializer serializer = OBJECT_MAPPER.writer(PRETTY_PRINTER)::writeValue;
     private static final JsonSchema jsonSchema = readJsonSchema();
+    private static final Random random = new Random(202509171757L);
+    private static final MessageOrderer messageOrderer = new MessageOrderer(random);
+
 
     static List<TestCase> all() throws IOException {
         List<TestCase> cases = new ArrayList<>();
@@ -55,8 +58,8 @@ class MessagesToJsonWriterAcceptanceTest {
         return TestCase.fromDirectory("../testdata/compatibility-kit/src");
     }
 
-    private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out) throws IOException {
-        return writeJsonReport(testCase, out, MessageOrderer.originalOrder());
+    private static ByteArrayOutputStream writeJsonReport(TestCase testCase, Consumer<List<Envelope>> orderer) throws IOException {
+        return writeJsonReport(testCase, new ByteArrayOutputStream(), orderer);
     }
 
     private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out, Consumer<List<Envelope>> orderer) throws IOException {
@@ -95,7 +98,7 @@ class MessagesToJsonWriterAcceptanceTest {
     @ParameterizedTest
     @MethodSource("all")
     void test(TestCase testCase) throws IOException, JSONException {
-        ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream());
+        ByteArrayOutputStream actual = writeJsonReport(testCase, messageOrderer.originalOrder());
         byte[] expected = Files.readAllBytes(testCase.expected);
         assertJsonEquals(new String(expected, UTF_8), new String(actual.toByteArray(), UTF_8));
     }
@@ -103,7 +106,7 @@ class MessagesToJsonWriterAcceptanceTest {
     @ParameterizedTest
     @MethodSource("all")
     void testWithSimulatedParallelExecution(TestCase testCase) throws IOException, JSONException {
-        ByteArrayOutputStream actual = writeJsonReport(testCase, new ByteArrayOutputStream(), simulateParallelExecution());
+        ByteArrayOutputStream actual = writeJsonReport(testCase, messageOrderer.simulateParallelExecution());
         byte[] expected = Files.readAllBytes(testCase.expected);
         assertJsonEquals(new String(expected, UTF_8), new String(actual.toByteArray(), UTF_8));
     }
@@ -128,7 +131,7 @@ class MessagesToJsonWriterAcceptanceTest {
     @Disabled
     void updateExpectedFiles(TestCase testCase) throws IOException {
         try (OutputStream out = Files.newOutputStream(testCase.expected)) {
-            writeJsonReport(testCase, out);
+            writeJsonReport(testCase, out, messageOrderer.originalOrder());
         }
     }
 
