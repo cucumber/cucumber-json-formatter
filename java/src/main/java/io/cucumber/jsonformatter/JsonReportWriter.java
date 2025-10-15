@@ -119,7 +119,7 @@ final class JsonReportWriter {
         return dateTimeFormatter.format(Convertor.toInstant(instant));
     }
 
-    List<Object> createJsonReport() {
+    List<JvmFeature> createJsonReport() {
         return query.findAllTestCaseStarted()
                 .stream()
                 .map(this::createJvmElementData)
