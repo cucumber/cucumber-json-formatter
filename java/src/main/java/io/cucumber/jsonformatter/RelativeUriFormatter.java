@@ -4,10 +4,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.function.Function;
 
-class RelativeUriFormatter implements Function<URI, URI> {
+final class RelativeUriFormatter implements Function<URI, URI> {
     private final URI base;
 
-    public RelativeUriFormatter(URI base) {
+    RelativeUriFormatter(URI base) {
         this.base = base;
     }
 

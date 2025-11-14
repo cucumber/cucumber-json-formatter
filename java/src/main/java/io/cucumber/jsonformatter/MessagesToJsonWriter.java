@@ -51,25 +51,6 @@ public final class MessagesToJsonWriter implements AutoCloseable {
         return new Builder(serializer);
     }
 
-    public static final class Builder {
-        private final Serializer serializer;
-        private Function<URI, String> uriFormatter = URI::toString;
-
-        private Builder(Serializer serializer) {
-            this.serializer = requireNonNull(serializer);
-        }
-
-        public Builder relativizeAgainst(URI uri) {
-            this.uriFormatter = new RelativeUriFormatter(uri).andThen(URI::toString);
-            return this;
-        }
-
-        public MessagesToJsonWriter build(OutputStream out) {
-            requireNonNull(out);
-            return new MessagesToJsonWriter(out, serializer, uriFormatter);
-        }
-    }
-
     /**
      * Writes a cucumber message to the xml output.
      *
@@ -104,6 +85,25 @@ public final class MessagesToJsonWriter implements AutoCloseable {
             } finally {
                 streamClosed = true;
             }
+        }
+    }
+
+    public static final class Builder {
+        private final Serializer serializer;
+        private Function<URI, String> uriFormatter = URI::toString;
+
+        private Builder(Serializer serializer) {
+            this.serializer = requireNonNull(serializer);
+        }
+
+        public Builder relativizeAgainst(URI uri) {
+            this.uriFormatter = new RelativeUriFormatter(uri).andThen(URI::toString);
+            return this;
+        }
+
+        public MessagesToJsonWriter build(OutputStream out) {
+            requireNonNull(out);
+            return new MessagesToJsonWriter(out, serializer, uriFormatter);
         }
     }
 
