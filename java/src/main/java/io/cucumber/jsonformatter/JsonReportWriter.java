@@ -480,9 +480,9 @@ final class JsonReportWriter {
         return new JvmDocString(
                 step.getDocString()
                         .map(DocString::getLocation)
-                        .map(Location::getLine)
                         // Can't happen. Pickle doc strings are made from step doc strings
-                        .orElseGet(() -> step.getLocation().getLine()),
+                        .orElseGet(step::getLocation)
+                        .getLine(),
                 docString.getContent(),
                 docString.getMediaType().orElse(null));
     }
