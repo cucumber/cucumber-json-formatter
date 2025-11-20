@@ -59,7 +59,7 @@
             "keyword": "When ",
             "line": 18,
             "match": {
-              "location": "samples/attachments/attachments.ts:8",
+              "location": "samples/attachments/attachments.ts:11",
               "arguments": [
                 {
                   "val": "\"hello\"",
@@ -91,7 +91,7 @@
             "keyword": "When ",
             "line": 21,
             "match": {
-              "location": "samples/attachments/attachments.ts:12"
+              "location": "samples/attachments/attachments.ts:15"
             },
             "name": "text with ANSI escapes is logged",
             "result": {
@@ -117,7 +117,7 @@
             "keyword": "When ",
             "line": 24,
             "match": {
-              "location": "samples/attachments/attachments.ts:18",
+              "location": "samples/attachments/attachments.ts:21",
               "arguments": [
                 {
                   "val": "\"application/json\"",
@@ -156,7 +156,7 @@
             "keyword": "When ",
             "line": 30,
             "match": {
-              "location": "samples/attachments/attachments.ts:22",
+              "location": "samples/attachments/attachments.ts:28",
               "arguments": [
                 {
                   "val": "10",
@@ -195,7 +195,7 @@
             "keyword": "When ",
             "line": 33,
             "match": {
-              "location": "samples/attachments/attachments.ts:31"
+              "location": "samples/attachments/attachments.ts:37"
             },
             "name": "a PDF document is attached and renamed",
             "result": {
@@ -225,7 +225,7 @@
             "keyword": "When ",
             "line": 36,
             "match": {
-              "location": "samples/attachments/attachments.ts:38",
+              "location": "samples/attachments/attachments.ts:47",
               "arguments": [
                 {
                   "val": "\"https://cucumber.io\"",
