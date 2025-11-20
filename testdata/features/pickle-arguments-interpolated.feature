@@ -1,20 +1,20 @@
 Feature: pickle-arguments-interpolated
 
   Scenario Outline: docstring
-    Given this step accepts an docstring
+    Given this step accepts a docstring
       """application/json
-      { "key": "<value>" }
+      { "hello": "<key>" }
       """
 
     Examples:
       | key   |
-      | value |
+      | word |
 
   Scenario Outline: datatable
-    Given this step accepts an datatable
-      | key     |
-      | <value> |
+    Given this step accepts a datatable
+      | hello |
+      | <key> |
 
     Examples:
       | key   |
-      | value |
+      | world |
