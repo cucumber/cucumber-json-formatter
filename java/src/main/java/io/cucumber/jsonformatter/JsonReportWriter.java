@@ -456,7 +456,10 @@ final class JsonReportWriter {
     }
 
     private List<JvmDataTableRow> createJvmDataTableRows(PickleStep pickleStep) {
-        return pickleStep.getArgument().flatMap(PickleStepArgument::getDataTable).map(this::createJvmDataTableRows).orElse(null);
+        return pickleStep.getArgument()
+                .flatMap(PickleStepArgument::getDataTable)
+                .map(this::createJvmDataTableRows)
+                .orElse(null);
     }
 
     private List<JvmDataTableRow> createJvmDataTableRows(PickleTable argument) {
@@ -468,8 +471,8 @@ final class JsonReportWriter {
     }
 
     private JvmDocString createJvmDocString(PickleStep pickleStep, Step step) {
-        return pickleStep.getArgument().
-                flatMap(PickleStepArgument::getDocString)
+        return pickleStep.getArgument()
+                .flatMap(PickleStepArgument::getDocString)
                 .map(docString -> createJvmDocString(docString, step)).orElse(null);
     }
 
