@@ -1,9 +1,10 @@
 package io.cucumber.jsonformatter;
 
+import com.networknt.schema.Error;
 import com.networknt.schema.InputFormat;
-import com.networknt.schema.JsonSchema;
-import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.ValidationMessage;
+import com.networknt.schema.Schema;
+import com.networknt.schema.SchemaRegistry;
+import com.networknt.schema.SpecificationVersion;
 import io.cucumber.compatibilitykit.MessageOrderer;
 import io.cucumber.messages.NdjsonToMessageIterable;
 import io.cucumber.messages.types.Envelope;
@@ -24,12 +25,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.networknt.schema.SpecVersion.VersionFlag.V202012;
 import static io.cucumber.jsonformatter.Jackson.OBJECT_MAPPER;
 import static io.cucumber.jsonformatter.Jackson.PRETTY_PRINTER;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -39,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MessagesToJsonWriterAcceptanceTest {
     private static final NdjsonToMessageIterable.Deserializer deserializer = (json) -> OBJECT_MAPPER.readValue(json, Envelope.class);
     private static final MessagesToJsonWriter.Serializer serializer = OBJECT_MAPPER.writer(PRETTY_PRINTER)::writeValue;
-    private static final JsonSchema jsonSchema = readJsonSchema();
+    private static final Schema jsonSchema = readJsonSchema();
     private static final Random random = new Random(202509171757L);
     private static final MessageOrderer messageOrderer = new MessageOrderer(random);
 
@@ -85,10 +84,11 @@ class MessagesToJsonWriterAcceptanceTest {
         JSONAssert.assertEquals(expected, actual, true);
     }
 
-    private static JsonSchema readJsonSchema() {
+    private static Schema readJsonSchema() {
         Path path = Paths.get("../testdata/json-schema/src/cucumber-jvm.json");
         try (InputStream resource = Files.newInputStream(path)) {
-            return JsonSchemaFactory.getInstance(V202012).getSchema(resource);
+            SchemaRegistry registry = SchemaRegistry.withDefaultDialect(SpecificationVersion.DRAFT_2020_12);
+            return registry.getSchema(resource);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -117,11 +117,11 @@ class MessagesToJsonWriterAcceptanceTest {
         // So for schema validation there is no need to run the formatter
         // Makes the test faster 
         byte[] expected = Files.readAllBytes(testCase.expected);
-        Set<ValidationMessage> assertions = jsonSchema.validate(
+        List<Error> assertions = jsonSchema.validate(
                 new String(expected, UTF_8),
                 InputFormat.JSON,
                 // By default, since Draft 2019-09 the format keyword only generates annotations and not assertions
-                executionContext -> executionContext.getExecutionConfig().setFormatAssertionsEnabled(true));
+                executionContext -> executionContext.executionConfig(config -> config.formatAssertionsEnabled(true)));
         assertThat(assertions).isEmpty();
     }
 
