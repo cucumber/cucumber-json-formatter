@@ -19,7 +19,6 @@ import io.cucumber.messages.Convertor;
 import io.cucumber.messages.types.Attachment;
 import io.cucumber.messages.types.AttachmentContentEncoding;
 import io.cucumber.messages.types.Background;
-import io.cucumber.messages.types.DataTable;
 import io.cucumber.messages.types.DocString;
 import io.cucumber.messages.types.Exception;
 import io.cucumber.messages.types.Feature;
@@ -29,7 +28,11 @@ import io.cucumber.messages.types.Hook;
 import io.cucumber.messages.types.HookType;
 import io.cucumber.messages.types.Location;
 import io.cucumber.messages.types.Pickle;
+import io.cucumber.messages.types.PickleDocString;
 import io.cucumber.messages.types.PickleStep;
+import io.cucumber.messages.types.PickleStepArgument;
+import io.cucumber.messages.types.PickleTable;
+import io.cucumber.messages.types.PickleTableCell;
 import io.cucumber.messages.types.PickleTag;
 import io.cucumber.messages.types.Rule;
 import io.cucumber.messages.types.RuleChild;
@@ -39,7 +42,6 @@ import io.cucumber.messages.types.Step;
 import io.cucumber.messages.types.StepDefinition;
 import io.cucumber.messages.types.StepMatchArgument;
 import io.cucumber.messages.types.StepMatchArgumentsList;
-import io.cucumber.messages.types.TableCell;
 import io.cucumber.messages.types.Tag;
 import io.cucumber.messages.types.TestCaseStarted;
 import io.cucumber.messages.types.TestStep;
@@ -418,8 +420,8 @@ final class JsonReportWriter {
                                         createJvmMatch(testStep),
                                         pickleStep.getText(),
                                         createJvmResult(testStepFinished.getTestStepResult()),
-                                        createJvmDocString(step),
-                                        createJvmDataTableRows(step),
+                                        createJvmDocString(pickleStep, step),
+                                        createJvmDataTableRows(pickleStep),
                                         createHookSteps(beforeStepHooks),
                                         createHookSteps(afterStepHooks),
                                         createEmbeddings(attachments),
@@ -453,25 +455,34 @@ final class JsonReportWriter {
                 group.getStart().orElse(null));
     }
 
-    private List<JvmDataTableRow> createJvmDataTableRows(Step step) {
-        return step.getDataTable().map(this::createJvmDataTableRows).orElse(null);
+    private List<JvmDataTableRow> createJvmDataTableRows(PickleStep pickleStep) {
+        return pickleStep.getArgument()
+                .flatMap(PickleStepArgument::getDataTable)
+                .map(this::createJvmDataTableRows)
+                .orElse(null);
     }
 
-    private List<JvmDataTableRow> createJvmDataTableRows(DataTable argument) {
+    private List<JvmDataTableRow> createJvmDataTableRows(PickleTable argument) {
         return argument.getRows().stream()
                 .map(row -> new JvmDataTableRow(row.getCells().stream()
-                        .map(TableCell::getValue)
+                        .map(PickleTableCell::getValue)
                         .collect(toList())))
                 .collect(toList());
     }
 
-    private JvmDocString createJvmDocString(Step step) {
-        return step.getDocString().map(this::createJvmDocString).orElse(null);
+    private JvmDocString createJvmDocString(PickleStep pickleStep, Step step) {
+        return pickleStep.getArgument()
+                .flatMap(PickleStepArgument::getDocString)
+                .map(docString -> createJvmDocString(docString, step)).orElse(null);
     }
 
-    private JvmDocString createJvmDocString(DocString docString) {
+    private JvmDocString createJvmDocString(PickleDocString docString, Step step) {
         return new JvmDocString(
-                docString.getLocation().getLine(),
+                step.getDocString()
+                        .map(DocString::getLocation)
+                        // Can't happen. Pickle doc strings are made from step doc strings
+                        .orElseGet(step::getLocation)
+                        .getLine(),
                 docString.getContent(),
                 docString.getMediaType().orElse(null));
     }
