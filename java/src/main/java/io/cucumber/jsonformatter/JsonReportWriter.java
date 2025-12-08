@@ -229,10 +229,7 @@ final class JsonReportWriter {
     }
 
     private List<JvmElement> createJvmElement(JvmElementData data) {
-        Map<Optional<Background>, List<TestStepFinished>> stepsByBackground = query
-                .findTestStepFinishedAndTestStepBy(data.testCaseStarted)
-                .stream()
-                .collect(groupTestStepsByBackground(data));
+        Map<Optional<Background>, List<TestStepFinished>> stepsByBackground = findStepsByBackGround(data);
 
         // There can be multiple backgrounds, but historically the json format
         // only ever had one. So we group all other backgrounds steps with the
@@ -243,16 +240,35 @@ final class JsonReportWriter {
                 .flatMap(entry -> entry.getKey()
                         .map(bg -> createBackground(data, bg, entry.getValue())));
 
-        Optional<JvmElement> testCase = stepsByBackground.entrySet().stream()
+        List<TestStepFinished> scenarioTestStepsFinished = stepsByBackground.entrySet().stream()
                 .filter(isTestCase())
                 .reduce(mergeEntries())
                 .map(Entry::getValue)
-                .map(scenarioTestStepsFinished -> createTestCase(data, scenarioTestStepsFinished));
+                // Ensure scenarios without steps are also included
+                .orElseGet(Collections::emptyList);
+        JvmElement testCase = createTestCase(data, scenarioTestStepsFinished);
+        
+        List<JvmElement> elements = new ArrayList<>(2);
+        background.ifPresent(elements::add);
+        elements.add(testCase);
+        return elements;
+    }
 
-        return Stream.of(background, testCase)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(toList());
+    private Map<Optional<Background>, List<TestStepFinished>> findStepsByBackGround(JvmElementData data) {
+        List<Background> backgrounds = data.lineage.feature()
+                .map(this::findBackgroundsBy)
+                .orElseGet(Collections::emptyList);
+
+        Map<Optional<Background>, List<TestStepFinished>> stepsByBackground = query
+                .findTestStepFinishedAndTestStepBy(data.testCaseStarted)
+                .stream()
+                .collect(groupTestStepsByBackground(backgrounds));
+
+        // Ensure backgrounds without steps are also included
+        backgrounds.stream()
+                .map(Optional::of)
+                .forEach(background -> stepsByBackground.computeIfAbsent(background, b -> emptyList()));
+        return stepsByBackground;
     }
 
     private JvmElement createTestCase(JvmElementData data, List<TestStepFinished> scenarioTestStepsFinished) {
@@ -494,12 +510,8 @@ final class JsonReportWriter {
     }
 
     private Collector<Entry<TestStepFinished, TestStep>, ?, Map<Optional<Background>, List<TestStepFinished>>> groupTestStepsByBackground(
-            JvmElementData data
+            List<Background> backgrounds
     ) {
-        List<Background> backgrounds = data.lineage.feature()
-                .map(this::findBackgroundsBy)
-                .orElseGet(Collections::emptyList);
-
         Function<Entry<TestStepFinished, TestStep>, Optional<Background>> grouping = entry -> query
                 .findPickleStepBy(entry.getValue())
                 .flatMap(pickleStep -> findBackgroundBy(backgrounds, pickleStep));

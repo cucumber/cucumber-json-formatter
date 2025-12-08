@@ -143,7 +143,7 @@ class MessagesToJsonWriterAcceptanceTest {
         TestCase(Path source) {
             this.source = source;
             String parent = source.getParent().getFileName().toString();
-            if (parent.equals("testdata")) {
+            if (parent.equals("src")) {
                 parent = source.getParent().getParent().getFileName().toString();
             }
             this.group = parent;
