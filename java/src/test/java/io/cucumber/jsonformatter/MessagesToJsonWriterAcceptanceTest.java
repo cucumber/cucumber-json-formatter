@@ -7,6 +7,7 @@ import com.networknt.schema.SchemaRegistry;
 import com.networknt.schema.SpecificationVersion;
 import io.cucumber.compatibilitykit.MessageOrderer;
 import io.cucumber.messages.NdjsonToMessageIterable;
+import io.cucumber.messages.ndjson.Deserializer;
 import io.cucumber.messages.types.Envelope;
 import org.json.JSONException;
 import org.junit.jupiter.api.Disabled;
@@ -36,7 +37,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 class MessagesToJsonWriterAcceptanceTest {
-    private static final NdjsonToMessageIterable.Deserializer deserializer = (json) -> OBJECT_MAPPER.readValue(json, Envelope.class);
     private static final MessagesToJsonWriter.Serializer serializer = OBJECT_MAPPER.writer(PRETTY_PRINTER)::writeValue;
     private static final Schema jsonSchema = readJsonSchema();
     private static final Random random = new Random(202509171757L);
@@ -63,7 +63,7 @@ class MessagesToJsonWriterAcceptanceTest {
     private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out, Consumer<List<Envelope>> orderer) throws IOException {
         List<Envelope> messages = new ArrayList<>();
         try (InputStream in = Files.newInputStream(testCase.source)) {
-            try (NdjsonToMessageIterable envelopes = new NdjsonToMessageIterable(in, deserializer)) {
+            try (NdjsonToMessageIterable envelopes = new NdjsonToMessageIterable(in, new Deserializer())) {
                 for (Envelope envelope : envelopes) {
                     messages.add(envelope);
                 }
