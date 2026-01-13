@@ -11,22 +11,18 @@ import static java.util.Objects.requireNonNull;
  * "https://github.com/cucumber/cucumber-json-schema/blob/main/schemas/cucumber-jvm.json">cucumber-jvm.json</a>
  * schema.
  */
-public final class CucumberJvmJson {
-
-    private CucumberJvmJson() {
-        /* no-op */
-    }
-
+final class CucumberJvmJson {
+    
     @Nullable
     private static <T> List<T> nullIfEmpty(List<T> list) {
         return list.isEmpty() ? null : list;
     }
 
-    public enum JvmElementType {
+    enum JvmElementType {
         background, scenario
     }
-
-    public enum JvmStatus {
+    
+    enum JvmStatus {
         passed,
         skipped,
         pending,
@@ -35,7 +31,7 @@ public final class CucumberJvmJson {
         failed
     }
 
-    public static final class JvmFeature {
+    static final class JvmFeature {
         private final Integer line;
         private final String uri;
         private final String id;
@@ -45,7 +41,7 @@ public final class CucumberJvmJson {
         private final List<JvmElement> elements;
         private final @Nullable List<JvmLocationTag> tags;
 
-        public JvmFeature(
+        JvmFeature(
                 String uri, String id, Integer line, String keyword, String name, String description,
                 List<JvmElement> elements, @Nullable List<JvmLocationTag> tags
         ) {
@@ -92,7 +88,7 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmElement {
+    static final class JvmElement {
         private final @Nullable String start_timestamp;
         private final Integer line;
         private final @Nullable String id;
@@ -105,7 +101,7 @@ public final class CucumberJvmJson {
         private final @Nullable List<JvmHook> after;
         private final @Nullable List<JvmTag> tags;
 
-        public JvmElement(
+        JvmElement(
                 @Nullable String start_timestamp, Integer line, @Nullable String id, JvmElementType type, String keyword, String name,
                 String description, List<JvmStep> steps, List<JvmHook> before, List<JvmHook> after, List<JvmTag> tags
         ) {
@@ -167,7 +163,7 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmStep {
+    static final class JvmStep {
         private final String keyword;
         private final Integer line;
         private final @Nullable JvmMatch match;
@@ -180,7 +176,7 @@ public final class CucumberJvmJson {
         private final @Nullable List<JvmEmbedding> embeddings;
         private final @Nullable List<String> output;
 
-        public JvmStep(
+        JvmStep(
                 String keyword, Integer line, @Nullable JvmMatch match, String name, JvmResult result, @Nullable JvmDocString doc_string,
                 @Nullable List<JvmDataTableRow> rows, List<JvmHook> before, List<JvmHook> after, List<JvmEmbedding> embeddings, List<String> output
         ) {
@@ -242,11 +238,11 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmMatch {
+    static final class JvmMatch {
         private final @Nullable String location;
         private final @Nullable List<JvmArgument> arguments;
 
-        public JvmMatch(@Nullable String location, @Nullable List<JvmArgument> arguments) {
+        JvmMatch(@Nullable String location, @Nullable List<JvmArgument> arguments) {
             this.location = location;
             this.arguments = arguments;
         }
@@ -260,11 +256,11 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmArgument {
+    static final class JvmArgument {
         private final @Nullable String val;
         private final @Nullable Number offset;
 
-        public JvmArgument(@Nullable String val, @Nullable Number offset) {
+        JvmArgument(@Nullable String val, @Nullable Number offset) {
             this.val = val;
             this.offset = offset;
         }
@@ -278,12 +274,12 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmResult {
+    static final class JvmResult {
         private final @Nullable Long duration;
         private final JvmStatus status;
         private final @Nullable String error_message;
 
-        public JvmResult(@Nullable Long duration, JvmStatus status, @Nullable String error_message) {
+        JvmResult(@Nullable Long duration, JvmStatus status, @Nullable String error_message) {
             this.duration = duration;
             this.status = requireNonNull(status);
             this.error_message = error_message;
@@ -302,12 +298,12 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmDocString {
+    static final class JvmDocString {
         private final Integer line;
         private final String value;
         private final @Nullable String content_type;
 
-        public JvmDocString(Integer line, String value, @Nullable String content_type) {
+        JvmDocString(Integer line, String value, @Nullable String content_type) {
             this.line = requireNonNull(line);
             this.value = requireNonNull(value);
             this.content_type = content_type;
@@ -326,10 +322,10 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmDataTableRow {
+    static final class JvmDataTableRow {
         private final List<String> cells;
 
-        public JvmDataTableRow(List<String> cells) {
+        JvmDataTableRow(List<String> cells) {
             this.cells = requireNonNull(cells);
         }
 
@@ -338,7 +334,7 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmHook {
+    static final class JvmHook {
         private final JvmMatch match;
         private final JvmResult result;
         private final @Nullable List<JvmEmbedding> embeddings;
@@ -368,12 +364,12 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmEmbedding {
+    static final class JvmEmbedding {
         private final String mime_type;
         private final String data;
         private final @Nullable String name;
 
-        public JvmEmbedding(String mime_type, String data, @Nullable String name) {
+        JvmEmbedding(String mime_type, String data, @Nullable String name) {
             this.mime_type = requireNonNull(mime_type);
             this.data = requireNonNull(data);
             this.name = name;
@@ -392,10 +388,10 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmTag {
+    static final class JvmTag {
         private final String name;
 
-        public JvmTag(String name) {
+        JvmTag(String name) {
             this.name = requireNonNull(name);
         }
 
@@ -404,12 +400,12 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmLocationTag {
+    static final class JvmLocationTag {
         private final String name;
         private final String type;
         private final JvmLocation location;
 
-        public JvmLocationTag(String name, String type, JvmLocation location) {
+        JvmLocationTag(String name, String type, JvmLocation location) {
             this.name = requireNonNull(name);
             this.type = requireNonNull(type);
             this.location = requireNonNull(location);
@@ -428,11 +424,11 @@ public final class CucumberJvmJson {
         }
     }
 
-    public static final class JvmLocation {
+    static final class JvmLocation {
         private final Integer line;
         private final Integer column;
 
-        public JvmLocation(Integer line, Integer column) {
+        JvmLocation(Integer line, Integer column) {
             this.line = requireNonNull(line);
             this.column = requireNonNull(column);
         }
