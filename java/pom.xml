@@ -16,7 +16,7 @@
     <url>https://github.com/cucumber/cucumber-json-formatter</url>
 
     <properties>
-        <project.Automatic-Module-Name>io.cucumber.jsonformatter</project.Automatic-Module-Name>
+        <osgi.bundle-symbolic-name>io.cucumber.jsonformatter</osgi.bundle-symbolic-name>
         <project.build.outputTimestamp>1761578779</project.build.outputTimestamp>
     </properties>
 
