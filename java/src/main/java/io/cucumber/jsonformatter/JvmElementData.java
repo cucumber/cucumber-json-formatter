@@ -13,7 +13,7 @@ import static java.util.Objects.requireNonNull;
 final class JvmElementData {
     static final Comparator<JvmElementData> comparator = Comparator
             .comparing((JvmElementData data) -> data.pickle.getUri())
-            // TODO: Use location from pickle
+            // We can't use the location from the pickle, it wasn't present in Cucumber-JVM 7.26
             .thenComparing(data -> data.location, new LocationComparator());
 
     final TestCaseStarted testCaseStarted;
