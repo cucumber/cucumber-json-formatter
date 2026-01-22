@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2025-12-09
+### Fixed
+- Include empty scenarios and backgrounds ([#34](https://github.com/cucumber/cucumber-json-formatter/pull/34))
+
+## [0.3.1] - 2025-11-20
+### Fixed
+- Fix interpolated data tables and doc string arguments ([#29](https://github.com/cucumber/cucumber-json-formatter/pull/29))
+
 ## [0.3.0] - 2025-10-27
 ### Changed
 - Update dependency io.cucumber:messages up to v30
@@ -39,7 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Java implementation ([#1](https://github.com/cucumber/cucumber-json-formatter/pull/1))
 
-[Unreleased]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.3.2...HEAD
+[0.3.2]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.3.1...v0.3.2
+[0.3.1]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.1.3...v0.2.0

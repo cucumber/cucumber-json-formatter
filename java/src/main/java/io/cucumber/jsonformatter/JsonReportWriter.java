@@ -19,7 +19,6 @@ import io.cucumber.messages.Convertor;
 import io.cucumber.messages.types.Attachment;
 import io.cucumber.messages.types.AttachmentContentEncoding;
 import io.cucumber.messages.types.Background;
-import io.cucumber.messages.types.DataTable;
 import io.cucumber.messages.types.DocString;
 import io.cucumber.messages.types.Exception;
 import io.cucumber.messages.types.Feature;
@@ -29,7 +28,11 @@ import io.cucumber.messages.types.Hook;
 import io.cucumber.messages.types.HookType;
 import io.cucumber.messages.types.Location;
 import io.cucumber.messages.types.Pickle;
+import io.cucumber.messages.types.PickleDocString;
 import io.cucumber.messages.types.PickleStep;
+import io.cucumber.messages.types.PickleStepArgument;
+import io.cucumber.messages.types.PickleTable;
+import io.cucumber.messages.types.PickleTableCell;
 import io.cucumber.messages.types.PickleTag;
 import io.cucumber.messages.types.Rule;
 import io.cucumber.messages.types.RuleChild;
@@ -39,7 +42,6 @@ import io.cucumber.messages.types.Step;
 import io.cucumber.messages.types.StepDefinition;
 import io.cucumber.messages.types.StepMatchArgument;
 import io.cucumber.messages.types.StepMatchArgumentsList;
-import io.cucumber.messages.types.TableCell;
 import io.cucumber.messages.types.Tag;
 import io.cucumber.messages.types.TestCaseStarted;
 import io.cucumber.messages.types.TestStep;
@@ -69,7 +71,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
-import java.util.stream.Stream;
 
 import static io.cucumber.jsonformatter.IdNamingVisitor.formatId;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -215,10 +216,7 @@ final class JsonReportWriter {
     }
 
     private List<JvmElement> createJvmElement(JvmElementData data) {
-        Map<Optional<Background>, List<TestStepFinished>> stepsByBackground = query
-                .findTestStepFinishedAndTestStepBy(data.testCaseStarted)
-                .stream()
-                .collect(groupTestStepsByBackground(data));
+        Map<Optional<Background>, List<TestStepFinished>> stepsByBackground = findStepsByBackGround(data);
 
         // There can be multiple backgrounds, but historically the json format
         // only ever had one. So we group all other backgrounds steps with the
@@ -229,16 +227,35 @@ final class JsonReportWriter {
                 .flatMap(entry -> entry.getKey()
                         .map(bg -> createBackground(data, bg, entry.getValue())));
 
-        Optional<JvmElement> testCase = stepsByBackground.entrySet().stream()
+        List<TestStepFinished> scenarioTestStepsFinished = stepsByBackground.entrySet().stream()
                 .filter(isTestCase())
                 .reduce(JsonReportWriter::mergeEntries)
                 .map(Entry::getValue)
-                .map(scenarioTestStepsFinished -> createTestCase(data, scenarioTestStepsFinished));
+                // Ensure scenarios without steps are also included
+                .orElseGet(Collections::emptyList);
+        JvmElement testCase = createTestCase(data, scenarioTestStepsFinished);
 
-        return Stream.of(background, testCase)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(toList());
+        List<JvmElement> elements = new ArrayList<>(2);
+        background.ifPresent(elements::add);
+        elements.add(testCase);
+        return elements;
+    }
+
+    private Map<Optional<Background>, List<TestStepFinished>> findStepsByBackGround(JvmElementData data) {
+        List<Background> backgrounds = data.lineage.feature()
+                .map(this::findBackgroundsBy)
+                .orElseGet(Collections::emptyList);
+
+        Map<Optional<Background>, List<TestStepFinished>> stepsByBackground = query
+                .findTestStepFinishedAndTestStepBy(data.testCaseStarted)
+                .stream()
+                .collect(groupTestStepsByBackground(backgrounds));
+
+        // Ensure backgrounds without steps are also included
+        backgrounds.stream()
+                .map(Optional::of)
+                .forEach(background -> stepsByBackground.computeIfAbsent(background, b -> emptyList()));
+        return stepsByBackground;
     }
 
     private JvmElement createTestCase(JvmElementData data, List<TestStepFinished> scenarioTestStepsFinished) {
@@ -402,8 +419,8 @@ final class JsonReportWriter {
                                         createJvmMatch(testStep),
                                         pickleStep.getText(),
                                         createJvmResult(testStepFinished.getTestStepResult()),
-                                        createJvmDocString(step),
-                                        createJvmDataTableRows(step),
+                                        createJvmDocString(pickleStep, step),
+                                        createJvmDataTableRows(pickleStep),
                                         createHookSteps(beforeStepHooks),
                                         createHookSteps(afterStepHooks),
                                         createEmbeddings(attachments),
@@ -439,26 +456,35 @@ final class JsonReportWriter {
     }
 
     @Nullable
-    private List<JvmDataTableRow> createJvmDataTableRows(Step step) {
-        return step.getDataTable().map(this::createJvmDataTableRows).orElse(null);
+    private List<JvmDataTableRow> createJvmDataTableRows(PickleStep pickleStep) {
+        return pickleStep.getArgument()
+                .flatMap(PickleStepArgument::getDataTable)
+                .map(this::createJvmDataTableRows)
+                .orElse(null);
     }
 
-    private List<JvmDataTableRow> createJvmDataTableRows(DataTable argument) {
+    private List<JvmDataTableRow> createJvmDataTableRows(PickleTable argument) {
         return argument.getRows().stream()
                 .map(row -> new JvmDataTableRow(row.getCells().stream()
-                        .map(TableCell::getValue)
+                        .map(PickleTableCell::getValue)
                         .collect(toList())))
                 .collect(toList());
     }
 
     @Nullable
-    private JvmDocString createJvmDocString(Step step) {
-        return step.getDocString().map(this::createJvmDocString).orElse(null);
+    private JvmDocString createJvmDocString(PickleStep pickleStep, Step step) {
+        return pickleStep.getArgument()
+                .flatMap(PickleStepArgument::getDocString)
+                .map(docString -> createJvmDocString(docString, step)).orElse(null);
     }
 
-    private JvmDocString createJvmDocString(DocString docString) {
+    private JvmDocString createJvmDocString(PickleDocString docString, Step step) {
         return new JvmDocString(
-                docString.getLocation().getLine(),
+                step.getDocString()
+                        .map(DocString::getLocation)
+                        // Can't happen. Pickle doc strings are made from step doc strings
+                        .orElseGet(step::getLocation)
+                        .getLine(),
                 docString.getContent(),
                 docString.getMediaType().orElse(null));
     }
@@ -471,12 +497,8 @@ final class JsonReportWriter {
     }
 
     private Collector<Entry<TestStepFinished, TestStep>, ?, Map<Optional<Background>, List<TestStepFinished>>> groupTestStepsByBackground(
-            JvmElementData data
+            List<Background> backgrounds
     ) {
-        List<Background> backgrounds = data.lineage.feature()
-                .map(this::findBackgroundsBy)
-                .orElseGet(Collections::emptyList);
-
         Function<Entry<TestStepFinished, TestStep>, Optional<Background>> grouping = entry -> query
                 .findPickleStepBy(entry.getValue())
                 .flatMap(pickleStep -> findBackgroundBy(backgrounds, pickleStep));

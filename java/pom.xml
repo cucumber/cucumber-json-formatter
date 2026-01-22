@@ -16,7 +16,7 @@
     <url>https://github.com/cucumber/cucumber-json-formatter</url>
 
     <properties>
-        <project.build.outputTimestamp>1761578779</project.build.outputTimestamp>
+        <project.build.outputTimestamp>1765238562</project.build.outputTimestamp>
     </properties>
 
     <scm>
@@ -31,7 +31,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>6.0.1</version>
+                <version>6.0.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -39,7 +39,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
-                <version>2.20.1</version>
+                <version>2.21.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -60,7 +60,7 @@
             <artifactId>messages</artifactId>
             <version>[32.0.0,33.0.0)</version>
         </dependency>
-        
+
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>query</artifactId>
@@ -69,8 +69,15 @@
 
         <dependency>
             <groupId>io.cucumber</groupId>
+            <artifactId>messages-ndjson</artifactId>
+            <version>0.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
             <artifactId>compatibility-kit</artifactId>
-            <version>24.0.1</version>
+            <version>26.0.0</version>
             <scope>test</scope>
         </dependency>
         
@@ -114,7 +121,7 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>1.5.9</version>
+            <version>2.0.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -124,7 +131,7 @@
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.21.1</version>
+                <version>1.22.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
