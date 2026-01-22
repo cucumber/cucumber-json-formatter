@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/attachments/attachments.feature",
     "id": "attachments",
+    "line": 1,
     "keyword": "Feature",
     "name": "Attachments",
     "description": "  It is sometimes useful to take a screenshot while a scenario runs or capture some logs.\n\n  Cucumber lets you `attach` arbitrary files during execution, and you can\n  specify a content type for the contents.\n\n  Formatters can then render these attachments in reports.\n\n  Attachments must have a body and a content type.",
@@ -14,7 +14,7 @@
         "type": "scenario",
         "keyword": "Scenario",
         "name": "Strings can be attached with a media type",
-        "description": "    Beware that some formatters such as @cucumber/react use the media type\n    to determine how to display an attachment.",
+        "description": "    Beware that some formatters such as the html formatter use the media type\n    to determine how to display an attachment.",
         "steps": [
           {
             "keyword": "When ",
@@ -242,6 +242,46 @@
               {
                 "mime_type": "text/uri-list",
                 "data": "aHR0cHM6Ly9jdWN1bWJlci5pbw=="
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.036Z",
+        "line": 38,
+        "id": "attachments;attaching-during-a-failed-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Attaching during a failed step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "When ",
+            "line": 39,
+            "match": {
+              "location": "samples/attachments/attachments.ts:51",
+              "arguments": [
+                {
+                  "val": "\"hello\"",
+                  "offset": 11
+                },
+                {
+                  "val": "\"application/octet-stream\"",
+                  "offset": 34
+                }
+              ]
+            },
+            "name": "the string \"hello\" is attached as \"application/octet-stream\" before a failure",
+            "result": {
+              "duration": 1000000,
+              "status": "failed",
+              "error_message": "Error: whoops\nsamples/attachments/attachments.feature:39"
+            },
+            "embeddings": [
+              {
+                "mime_type": "application/octet-stream",
+                "data": "aGVsbG8="
               }
             ]
           }

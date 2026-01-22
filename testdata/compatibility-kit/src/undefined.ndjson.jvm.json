@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/undefined/undefined.feature",
     "id": "undefined-steps",
+    "line": 1,
     "keyword": "Feature",
     "name": "Undefined steps",
     "description": "  At runtime, Cucumber may encounter a step in a scenario that it cannot match to a step definition.\n\n  In these cases, the scenario is not able to run and so the step status will be UNDEFINED, with\n  subsequent steps being SKIPPED and the overall result will be FAILURE.",

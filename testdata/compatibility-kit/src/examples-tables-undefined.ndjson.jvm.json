@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/examples-tables-undefined/examples-undefined.feature",
     "id": "examples-tables---with-undefined-steps",
+    "line": 1,
     "keyword": "Feature",
     "name": "Examples Tables - With Undefined Steps",
     "description": "  The replacement pattern used in scenario outlines does not influence how steps\n  are matched. The replacement pattern is replaced, and step definitions are\n  matched against that text. Because of that the following results in one\n  undefined step for each example and a suggested snippet to implement it. ",

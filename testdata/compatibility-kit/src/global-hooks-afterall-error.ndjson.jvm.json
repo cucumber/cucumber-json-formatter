@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/global-hooks-afterall-error/global-hooks-afterall-error.feature",
     "id": "global-hooks---afterall-error",
+    "line": 1,
     "keyword": "Feature",
     "name": "Global hooks - AfterAll error",
     "description": "  Errors in AfterAll hooks cause the whole test run to fail. The remaining AfterAll hooks will still run, in an\n  effort to clean up resources as well as possible.",

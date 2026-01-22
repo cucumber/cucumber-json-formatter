@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/cdata/cdata.feature",
     "id": "cdata",
+    "line": 1,
     "keyword": "Feature",
     "name": "cdata",
     "description": "  Cucumber xml formatters should be able to handle xml cdata elements.",

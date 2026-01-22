@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/stack-traces/stack-traces.feature",
     "id": "stack-traces",
+    "line": 1,
     "keyword": "Feature",
     "name": "Stack traces",
     "description": "  Stack traces can help you diagnose the source of a bug.\n\n  Cucumber provides helpful stack traces that includes the stack frames from the\n  Gherkin document and remove uninteresting frames by default.\n\n  The first line of the stack trace will contain a reference to the feature file.",

@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/ambiguous/ambiguous.feature",
     "id": "ambiguous-steps",
+    "line": 1,
     "keyword": "Feature",
     "name": "Ambiguous steps",
     "description": "  Multiple step definitions that match a pickle step result in an AMBIGUOUS status, since Cucumnber cannot determine\n  which one to execute.",

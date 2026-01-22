@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/pending/pending.feature",
     "id": "pending-steps",
+    "line": 1,
     "keyword": "Feature",
     "name": "Pending steps",
     "description": "  During development, step definitions can signal at runtime that they are\n  not yet implemented (or \"pending\") by returning or throwing a particular\n  value.\n\n  This causes subsequent steps in the scenario to be skipped, and the overall\n  result to be treated as a failure.",

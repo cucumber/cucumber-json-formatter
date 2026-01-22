@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/rules-backgrounds/rules-backgrounds.feature",
     "id": "rules-with-backgrounds",
+    "line": 1,
     "keyword": "Feature",
     "name": "Rules with Backgrounds",
     "description": "  Like Features, Rules can also have Backgrounds, whose steps are prepended to those of each child Scenario. Only\n  one Background at the Rule level is supported.\n\n  It's even possible to have a Background at both Feature and Rule level, in which case they are concatenated.",
