@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/hooks-skipped/hooks-skipped.feature",
     "id": "hooks-and-skipped",
+    "line": 1,
     "keyword": "Feature",
     "name": "Hooks and skipped",
     "description": "  Before and After hooks behave a little differently when it comes to skipping.",

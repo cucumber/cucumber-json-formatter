@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/retry-undefined/retry-undefined.feature",
     "id": "retry---with-undefined-steps",
+    "line": 1,
     "keyword": "Feature",
     "name": "Retry - With Undefined Steps",
     "description": "",

@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/doc-strings/doc-strings.feature",
     "id": "doc-strings",
+    "line": 1,
     "keyword": "Feature",
     "name": "Doc strings",
     "description": "  Doc strings are a way to supply long, sometimes multi-line, text to a step. They are passed as the last argument\n  to the step definition.",

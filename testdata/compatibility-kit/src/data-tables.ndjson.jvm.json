@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/data-tables/data-tables.feature",
     "id": "data-tables",
+    "line": 1,
     "keyword": "Feature",
     "name": "Data Tables",
     "description": "  Data Tables can be placed underneath a step and will be passed as the last\n  argument to the step definition.\n\n  They can be used to represent richer data structures, and can be transformed to other data-types.",

@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/rules/rules.feature",
     "id": "usage-of-a-`rule`",
+    "line": 1,
     "keyword": "Feature",
     "name": "Usage of a `Rule`",
     "description": "  You can place scenarios inside rules. This makes it possible to structure Gherkin documents\n  in the same way as [example maps](https://cucumber.io/blog/bdd/example-mapping-introduction/).\n\n  You can also use the Examples synonym for Scenario to make them even similar.",

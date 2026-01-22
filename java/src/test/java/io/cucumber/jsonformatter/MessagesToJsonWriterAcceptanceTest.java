@@ -6,7 +6,7 @@ import com.networknt.schema.Schema;
 import com.networknt.schema.SchemaRegistry;
 import com.networknt.schema.SpecificationVersion;
 import io.cucumber.compatibilitykit.MessageOrderer;
-import io.cucumber.messages.NdjsonToMessageIterable;
+import io.cucumber.messages.NdjsonToMessageReader;
 import io.cucumber.messages.ndjson.Deserializer;
 import io.cucumber.messages.types.Envelope;
 import org.json.JSONException;
@@ -64,10 +64,8 @@ class MessagesToJsonWriterAcceptanceTest {
     private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out, Consumer<List<Envelope>> orderer) throws IOException {
         List<Envelope> messages = new ArrayList<>();
         try (InputStream in = Files.newInputStream(testCase.source)) {
-            try (NdjsonToMessageIterable envelopes = new NdjsonToMessageIterable(in, new Deserializer())) {
-                for (Envelope envelope : envelopes) {
-                    messages.add(envelope);
-                }
+            try (var envelopes = new NdjsonToMessageReader(in, new Deserializer())) {
+                envelopes.lines().forEach(messages::add);
             }
         }
         orderer.accept(messages);
@@ -100,7 +98,7 @@ class MessagesToJsonWriterAcceptanceTest {
     void test(TestCase testCase) throws IOException, JSONException {
         ByteArrayOutputStream actual = writeJsonReport(testCase, messageOrderer.originalOrder());
         byte[] expected = Files.readAllBytes(testCase.expected);
-        assertJsonEquals(new String(expected, UTF_8), new String(actual.toByteArray(), UTF_8));
+        assertJsonEquals(new String(expected, UTF_8), actual.toString(UTF_8));
     }
 
     @ParameterizedTest
@@ -108,7 +106,7 @@ class MessagesToJsonWriterAcceptanceTest {
     void testWithSimulatedParallelExecution(TestCase testCase) throws IOException, JSONException {
         ByteArrayOutputStream actual = writeJsonReport(testCase, messageOrderer.simulateParallelExecution());
         byte[] expected = Files.readAllBytes(testCase.expected);
-        assertJsonEquals(new String(expected, UTF_8), new String(actual.toByteArray(), UTF_8));
+        assertJsonEquals(new String(expected, UTF_8), actual.toString(UTF_8));
     }
 
     @ParameterizedTest

@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/hooks-undefined/hooks-undefined.feature",
     "id": "hooks---with-undefined-steps",
+    "line": 1,
     "keyword": "Feature",
     "name": "Hooks - With Undefined Steps",
     "description": "  Hooks also run before and after undefined steps",

@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/backgrounds/backgrounds.feature",
     "id": "backgrounds",
+    "line": 1,
     "keyword": "Feature",
     "name": "Backgrounds",
     "description": "  Though not recommended, Backgrounds can be used to share context steps between Scenarios. The Background steps\n  are prepended to the steps in each Scenario when they are compiled to Pickles. Only one Background at the Feature\n  level is supported.",

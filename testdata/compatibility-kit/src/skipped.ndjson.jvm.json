@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/skipped/skipped.feature",
     "id": "skipping-scenarios",
+    "line": 1,
     "keyword": "Feature",
     "name": "Skipping scenarios",
     "description": "  Step definitions are able to signal at runtime that the scenario should\n  be skipped by raising a particular kind of exception status (For example PENDING or SKIPPED).\n\n  This can be useful in certain situations e.g. the current environment doesn't have\n  the right conditions for running a particular scenario.",

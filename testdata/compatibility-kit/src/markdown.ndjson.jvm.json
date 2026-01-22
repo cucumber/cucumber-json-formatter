@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/markdown/markdown.feature.md",
     "id": "cheese",
+    "line": 1,
     "keyword": "Feature",
     "name": "Cheese",
     "description": "| boz | boo |",

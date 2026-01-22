@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/hooks-conditional/hooks-conditional.feature",
     "id": "hooks---conditional-execution",
+    "line": 1,
     "keyword": "Feature",
     "name": "Hooks - Conditional execution",
     "description": "  Hooks are special steps that run before or after each scenario's steps.\n\n  They can also conditionally target specific scenarios, using tag expressions.",

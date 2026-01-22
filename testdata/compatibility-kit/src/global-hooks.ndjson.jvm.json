@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/global-hooks/global-hooks.feature",
     "id": "global-hooks",
+    "line": 1,
     "keyword": "Feature",
     "name": "Global hooks",
     "description": "  Hooks can be at the test run level, so they run once before or after all test cases.\n\n  AfterAll hooks are executed in reverse order of definition.",

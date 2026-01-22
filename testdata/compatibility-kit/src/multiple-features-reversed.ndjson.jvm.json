@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/multiple-features-reversed/multiple-features-reversed-1.feature",
     "id": "first-feature",
+    "line": 1,
     "keyword": "Feature",
     "name": "First feature",
     "description": "",
@@ -98,9 +98,9 @@
     "tags": [ ]
   },
   {
-    "line": 1,
     "uri": "samples/multiple-features-reversed/multiple-features-reversed-2.feature",
     "id": "second-feature",
+    "line": 1,
     "keyword": "Feature",
     "name": "Second feature",
     "description": "",
@@ -196,9 +196,9 @@
     "tags": [ ]
   },
   {
-    "line": 1,
     "uri": "samples/multiple-features-reversed/multiple-features-reversed-3.feature",
     "id": "third-feature",
+    "line": 1,
     "keyword": "Feature",
     "name": "Third feature",
     "description": "",

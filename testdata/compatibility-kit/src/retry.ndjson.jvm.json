@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/retry/retry.feature",
     "id": "retry",
+    "line": 1,
     "keyword": "Feature",
     "name": "Retry",
     "description": "  Some Cucumber implementations support a Retry mechanism, where test cases that fail\n  can be retried up to a limited number of attempts in the same test run.\n\n  Non-passing statuses other than FAILED won't trigger a retry, as they are not\n  going to pass however many times we attempt them.",

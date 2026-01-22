@@ -1,8 +1,8 @@
 [
   {
-    "line": 1,
     "uri": "samples/unknown-parameter-type/unknown-parameter-type.feature",
     "id": "parameter-types",
+    "line": 1,
     "keyword": "Feature",
     "name": "Parameter Types",
     "description": "  Cucumber will generate an error message if a step definition registers\n  an unknown parameter type, but the suite will run. Additionally, because\n  the step is effectively undefined, a suggestion will also be created.",
