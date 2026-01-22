@@ -34,8 +34,6 @@ import io.cucumber.messages.types.PickleStepArgument;
 import io.cucumber.messages.types.PickleTable;
 import io.cucumber.messages.types.PickleTableCell;
 import io.cucumber.messages.types.PickleTag;
-import io.cucumber.messages.types.Rule;
-import io.cucumber.messages.types.RuleChild;
 import io.cucumber.messages.types.Scenario;
 import io.cucumber.messages.types.SourceReference;
 import io.cucumber.messages.types.Step;
@@ -242,9 +240,9 @@ final class JsonReportWriter {
     }
 
     private Map<Optional<Background>, List<TestStepFinished>> findStepsByBackGround(JvmElementData data) {
-        List<Background> backgrounds = data.lineage.feature()
-                .map(this::findBackgroundsBy)
-                .orElseGet(Collections::emptyList);
+        List<Background> backgrounds = new ArrayList<>(2);
+        data.lineage.background().ifPresent(backgrounds::add);
+        data.lineage.ruleBackground().ifPresent(backgrounds::add);
 
         Map<Optional<Background>, List<TestStepFinished>> stepsByBackground = query
                 .findTestStepFinishedAndTestStepBy(data.testCaseStarted)
@@ -509,26 +507,6 @@ final class JsonReportWriter {
                 .collect(toList());
 
         return groupingBy(grouping, LinkedHashMap::new, collectingAndThen(toList(), extractKey));
-    }
-
-    private List<Background> findBackgroundsBy(Feature feature) {
-        return feature.getChildren()
-                .stream()
-                .map(featureChild -> {
-                    List<Background> backgrounds = new ArrayList<>();
-                    featureChild.getBackground().ifPresent(backgrounds::add);
-                    featureChild.getRule()
-                            .map(Rule::getChildren)
-                            .stream()
-                            .flatMap(Collection::stream)
-                            .map(RuleChild::getBackground)
-                            .filter(Optional::isPresent)
-                            .map(Optional::get)
-                            .forEach(backgrounds::add);
-                    return backgrounds;
-                })
-                .flatMap(Collection::stream)
-                .collect(toList());
     }
 
     private Optional<Background> findBackgroundBy(List<Background> backgrounds, PickleStep pickleStep) {
