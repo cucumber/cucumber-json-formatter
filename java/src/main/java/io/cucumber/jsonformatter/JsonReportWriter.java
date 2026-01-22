@@ -52,6 +52,7 @@ import io.cucumber.messages.types.Timestamp;
 import io.cucumber.query.Lineage;
 import io.cucumber.query.LineageReducer;
 import io.cucumber.query.Query;
+import org.jspecify.annotations.Nullable;
 
 import java.net.URI;
 import java.time.Duration;
@@ -67,11 +68,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
-import java.util.stream.Stream;
 
 import static io.cucumber.jsonformatter.IdNamingVisitor.formatId;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -94,11 +93,9 @@ final class JsonReportWriter {
         this.uriFormatter = requireNonNull(uriFormatter);
     }
 
-    private static BinaryOperator<Entry<Optional<Background>, List<TestStepFinished>>> mergeEntries() {
-        return (a, b) -> {
-            a.getValue().addAll(b.getValue());
-            return a;
-        };
+    private static Entry<Optional<Background>, List<TestStepFinished>> mergeEntries(Entry<Optional<Background>, List<TestStepFinished>> a, Entry<Optional<Background>, List<TestStepFinished>> b) {
+        a.getValue().addAll(b.getValue());
+        return a;
     }
 
     private static Predicate<Entry<Optional<Background>, List<TestStepFinished>>> isTestCase() {
@@ -109,7 +106,7 @@ final class JsonReportWriter {
         return entry -> entry.getKey().isPresent();
     }
 
-    private static Long formatDuration(TestStepResult result) {
+    private static @Nullable Long formatDuration(TestStepResult result) {
         Duration duration = Convertor.toDuration(result.getDuration());
         if (result.getStatus() == TestStepResultStatus.UNDEFINED) {
             return null;
@@ -178,21 +175,12 @@ final class JsonReportWriter {
             }
 
             switch (hook) {
-                case BEFORE_TEST_RUN:
-                case AFTER_TEST_RUN:
-                    break;
-                case BEFORE_TEST_CASE:
-                    beforeTestCase.add(testStepFinished);
-                    break;
-                case AFTER_TEST_CASE:
-                    afterTestCase.add(testStepFinished);
-                    break;
-                case BEFORE_TEST_STEP:
-                    beforeTestStep.add(testStepFinished);
-                    break;
-                case AFTER_TEST_STEP:
-                    afterTestStep.add(testStepFinished);
-                    break;
+                case BEFORE_TEST_RUN, AFTER_TEST_RUN -> {
+                }
+                case BEFORE_TEST_CASE -> beforeTestCase.add(testStepFinished);
+                case AFTER_TEST_CASE -> afterTestCase.add(testStepFinished);
+                case BEFORE_TEST_STEP -> beforeTestStep.add(testStepFinished);
+                case AFTER_TEST_STEP -> afterTestStep.add(testStepFinished);
             }
 
         }
@@ -210,13 +198,12 @@ final class JsonReportWriter {
                 document.getUri()
                         .map(URI::create)
                         .map(uriFormatter)
-                        .orElse(null),
+                        .orElseThrow(() -> new IllegalStateException("No uri for document")),
                 formatId(feature.getName()),
                 feature.getLocation().getLine(),
                 feature.getKeyword(),
                 feature.getName(),
-                // TODO: Can this be null?
-                feature.getDescription() != null ? feature.getDescription() : "",
+                feature.getDescription(),
                 createJvmElements(elements),
                 createJvmLocationTags(feature));
     }
@@ -236,18 +223,18 @@ final class JsonReportWriter {
         // first.
         Optional<JvmElement> background = stepsByBackground.entrySet().stream()
                 .filter(isBackGround())
-                .reduce(mergeEntries())
+                .reduce(JsonReportWriter::mergeEntries)
                 .flatMap(entry -> entry.getKey()
                         .map(bg -> createBackground(data, bg, entry.getValue())));
 
         List<TestStepFinished> scenarioTestStepsFinished = stepsByBackground.entrySet().stream()
                 .filter(isTestCase())
-                .reduce(mergeEntries())
+                .reduce(JsonReportWriter::mergeEntries)
                 .map(Entry::getValue)
                 // Ensure scenarios without steps are also included
                 .orElseGet(Collections::emptyList);
         JvmElement testCase = createTestCase(data, scenarioTestStepsFinished);
-        
+
         List<JvmElement> elements = new ArrayList<>(2);
         background.ifPresent(elements::add);
         elements.add(testCase);
@@ -339,16 +326,14 @@ final class JsonReportWriter {
     private static String encodeBodyAsBase64(Attachment attachment) {
         AttachmentContentEncoding encoding = attachment.getContentEncoding();
         String body = attachment.getBody();
-        switch (encoding) {
-            case IDENTITY:
+        return switch (encoding) {
+            case IDENTITY -> {
                 byte[] bytes = body.getBytes(UTF_8);
                 Base64.Encoder encoder = Base64.getEncoder();
-                return encoder.encodeToString(bytes);
-            case BASE64:
-                return body;
-            default:
-                throw new RuntimeException("Unknown content encoding " + encoding);
-        }
+                yield encoder.encodeToString(bytes);
+            }
+            case BASE64 -> body;
+        };
     }
 
     private List<String> createOutput(List<Attachment> attachments) {
@@ -365,15 +350,13 @@ final class JsonReportWriter {
     private static String encodeBodyAsPlainText(Attachment attachment) {
         AttachmentContentEncoding encoding = attachment.getContentEncoding();
         String body = attachment.getBody();
-        switch (encoding) {
-            case IDENTITY:
-                return body;
-            case BASE64:
+        return switch (encoding) {
+            case IDENTITY -> body;
+            case BASE64 -> {
                 Base64.Decoder decoder = Base64.getDecoder();
-                return new String(decoder.decode(body), UTF_8);
-            default:
-                throw new RuntimeException("Unknown content encoding " + encoding);
-        }
+                yield new String(decoder.decode(body), UTF_8);
+            }
+        };
     }
 
     private static boolean isTextCucumberLogPlain(String mediaType) {
@@ -392,7 +375,7 @@ final class JsonReportWriter {
                 "Tag",
                 new JvmLocation(
                         tag.getLocation().getLine(),
-                        tag.getLocation().getColumn().orElse(0L)));
+                        tag.getLocation().getColumn().orElse(0)));
     }
 
     private JvmElement createBackground(
@@ -451,6 +434,7 @@ final class JsonReportWriter {
                 createJvmArguments(testStep));
     }
 
+    @Nullable
     private List<JvmArgument> createJvmArguments(TestStep step) {
         return step.getStepMatchArgumentsLists()
                 // Only include arguments for unambiguous steps
@@ -471,6 +455,7 @@ final class JsonReportWriter {
                 group.getStart().orElse(null));
     }
 
+    @Nullable
     private List<JvmDataTableRow> createJvmDataTableRows(PickleStep pickleStep) {
         return pickleStep.getArgument()
                 .flatMap(PickleStepArgument::getDataTable)
@@ -486,6 +471,7 @@ final class JsonReportWriter {
                 .collect(toList());
     }
 
+    @Nullable
     private JvmDocString createJvmDocString(PickleStep pickleStep, Step step) {
         return pickleStep.getArgument()
                 .flatMap(PickleStepArgument::getDocString)
@@ -503,6 +489,7 @@ final class JsonReportWriter {
                 docString.getMediaType().orElse(null));
     }
 
+    @Nullable
     private String createLocation(TestStep step) {
         return findSourceReference(step)
                 .flatMap(sourceReferenceFormatter::format)
@@ -532,8 +519,8 @@ final class JsonReportWriter {
                     featureChild.getBackground().ifPresent(backgrounds::add);
                     featureChild.getRule()
                             .map(Rule::getChildren)
-                            .map(Collection::stream)
-                            .orElseGet(Stream::empty)
+                            .stream()
+                            .flatMap(Collection::stream)
                             .map(RuleChild::getBackground)
                             .filter(Optional::isPresent)
                             .map(Optional::get)

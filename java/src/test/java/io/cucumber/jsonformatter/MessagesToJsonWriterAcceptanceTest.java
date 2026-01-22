@@ -33,6 +33,7 @@ import java.util.stream.Stream;
 import static io.cucumber.jsonformatter.Jackson.OBJECT_MAPPER;
 import static io.cucumber.jsonformatter.Jackson.PRETTY_PRINTER;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -142,15 +143,24 @@ class MessagesToJsonWriterAcceptanceTest {
 
         TestCase(Path source) {
             this.source = source;
-            String parent = source.getParent().getFileName().toString();
-            if (parent.equals("src")) {
-                parent = source.getParent().getParent().getFileName().toString();
-            }
-            this.group = parent;
-            String fileName = source.getFileName().toString();
-            this.name = fileName.substring(0, fileName.lastIndexOf(".ndjson"));
+            this.group = getGroupName(source);
+            this.name = getFileNameWithNdjsonExtension(source);
             // Each cucumber has a different dialect
-            this.expected = source.getParent().resolve(name + ".ndjson.jvm.json");
+            this.expected = requireNonNull(source.getParent()).resolve(name + ".ndjson.jvm.json");
+        }
+
+        private static String getFileNameWithNdjsonExtension(Path source) {
+            String fileName = source.getFileName().toString();
+            return fileName.substring(0, fileName.lastIndexOf(".ndjson"));
+        }
+
+        private static String getGroupName(Path source) {
+            Path parent = requireNonNull(source.getParent());
+            String parentName = parent.getFileName().toString();
+            if (parentName.equals("testdata")) {
+                parentName = requireNonNull(parent.getParent()).getFileName().toString();
+            }
+            return parentName;
         }
 
         static List<TestCase> fromDirectory(String files) throws IOException {

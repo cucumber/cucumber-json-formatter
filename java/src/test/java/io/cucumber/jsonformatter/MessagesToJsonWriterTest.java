@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.time.Instant;
 
 import static io.cucumber.jsonformatter.Jackson.OBJECT_MAPPER;
-import static io.cucumber.jsonformatter.MessagesToJsonWriter.builder;
 import static io.cucumber.messages.Convertor.toMessage;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,16 +39,20 @@ class MessagesToJsonWriterTest {
 
     @Test
     void it_throws_when_writing_after_close() throws IOException {
+        Instant started = Instant.ofEpochSecond(10);
+
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        MessagesToJsonWriter messagesToHtmlWriter = builder(serializer).build(bytes);
+        MessagesToJsonWriter messagesToHtmlWriter = MessagesToJsonWriter.builder(serializer).build(bytes);
         messagesToHtmlWriter.close();
-        assertThrows(IOException.class, () -> messagesToHtmlWriter.write(null));
+        assertThrows(IOException.class, () -> messagesToHtmlWriter.write(
+                Envelope.of(new TestRunStarted(toMessage(started), "some-id"))
+        ));
     }
 
     @Test
     void it_can_be_closed_twice() throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        MessagesToJsonWriter messagesToHtmlWriter = builder(serializer).build(bytes);
+        MessagesToJsonWriter messagesToHtmlWriter = MessagesToJsonWriter.builder(serializer).build(bytes);
         messagesToHtmlWriter.close();
         assertDoesNotThrow(messagesToHtmlWriter::close);
     }
@@ -62,7 +65,7 @@ class MessagesToJsonWriterTest {
                 throw new IOException("Can't close this");
             }
         };
-        MessagesToJsonWriter messagesToHtmlWriter = builder(serializer).build(bytes);
+        MessagesToJsonWriter messagesToHtmlWriter = MessagesToJsonWriter.builder(serializer).build(bytes);
         assertThrows(IOException.class, messagesToHtmlWriter::close);
         byte[] before = bytes.toByteArray();
         assertDoesNotThrow(messagesToHtmlWriter::close);
@@ -73,12 +76,12 @@ class MessagesToJsonWriterTest {
 
     private String renderAsJson(Envelope... messages) throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        try (MessagesToJsonWriter messagesToHtmlWriter = builder(serializer).build(bytes)) {
+        try (MessagesToJsonWriter messagesToHtmlWriter = MessagesToJsonWriter.builder(serializer).build(bytes)) {
             for (Envelope message : messages) {
                 messagesToHtmlWriter.write(message);
             }
         }
 
-        return new String(bytes.toByteArray(), UTF_8);
+        return bytes.toString(UTF_8);
     }
 }
