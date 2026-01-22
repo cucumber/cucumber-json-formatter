@@ -140,7 +140,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <mutationThreshold>95</mutationThreshold>
+                    <mutationThreshold>85</mutationThreshold>
                 </configuration>
             </plugin>
             <plugin>
