@@ -1,0 +1,37 @@
+[
+  {
+    "uri": "samples/pending-exception/pending-exception.feature",
+    "id": "pending-steps-via-exception",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Pending steps via exception",
+    "description": "  Some implementations support marking a step pending via throwing\n  an exception, which can include a message",
+    "elements": [
+      {
+        "start_timestamp": "1970-01-01T00:00:00.001Z",
+        "line": 5,
+        "id": "pending-steps-via-exception;pending-via-an-exception",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Pending via an exception",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 6,
+            "match": {
+              "location": "samples/pending-exception/pending-exception.ts:3"
+            },
+            "name": "an unimplemented pending step",
+            "result": {
+              "duration": 1000000,
+              "status": "pending",
+              "error_message": "PendingException: TODO\nsamples/pending-exception/pending-exception.feature:6"
+            }
+          }
+        ]
+      }
+    ],
+    "tags": [ ]
+  }
+]
