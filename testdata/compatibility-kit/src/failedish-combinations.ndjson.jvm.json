@@ -1,0 +1,388 @@
+[
+  {
+    "uri": "samples/failedish-combinations/failedish-combinations.feature",
+    "id": "failed-ish-combinations",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Failed-ish combinations",
+    "description": "  Sometimes the first failed-ish (not passed or skipped) step's status\n  is not the only one.",
+    "elements": [
+      {
+        "start_timestamp": "1970-01-01T00:00:00.001Z",
+        "line": 7,
+        "id": "failed-ish-combinations;undefined-and-ambiguous-steps-can-follow-a-failed-ish-step;pending-as-the-first-failed-ish-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Pending as the first failed-ish step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 8,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:11"
+            },
+            "name": "a pending step",
+            "result": {
+              "duration": 1000000,
+              "status": "pending"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 9,
+            "match": { },
+            "name": "an undefined step",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 10,
+            "match": { },
+            "name": "an ambiguous step",
+            "result": {
+              "status": "ambiguous"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.009Z",
+        "line": 12,
+        "id": "failed-ish-combinations;undefined-and-ambiguous-steps-can-follow-a-failed-ish-step;undefined-as-the-first-failed-ish-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Undefined as the first failed-ish step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 13,
+            "match": { },
+            "name": "an undefined step",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 14,
+            "match": { },
+            "name": "an undefined step",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 15,
+            "match": { },
+            "name": "an ambiguous step",
+            "result": {
+              "status": "ambiguous"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.017Z",
+        "line": 17,
+        "id": "failed-ish-combinations;undefined-and-ambiguous-steps-can-follow-a-failed-ish-step;ambiguous-as-the-first-failed-ish-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Ambiguous as the first failed-ish step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 18,
+            "match": { },
+            "name": "an ambiguous step",
+            "result": {
+              "status": "ambiguous"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 19,
+            "match": { },
+            "name": "an undefined step",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 20,
+            "match": { },
+            "name": "an ambiguous step",
+            "result": {
+              "status": "ambiguous"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.025Z",
+        "line": 22,
+        "id": "failed-ish-combinations;undefined-and-ambiguous-steps-can-follow-a-failed-ish-step;failed-as-the-first-failed-ish-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Failed as the first failed-ish step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 23,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:19"
+            },
+            "name": "a failing step",
+            "result": {
+              "duration": 1000000,
+              "status": "failed",
+              "error_message": "Error: whoops\nsamples/failedish-combinations/failedish-combinations.feature:23"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 24,
+            "match": { },
+            "name": "an undefined step",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 25,
+            "match": { },
+            "name": "an ambiguous step",
+            "result": {
+              "status": "ambiguous"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.033Z",
+        "line": 29,
+        "id": "failed-ish-combinations;failed-and-pending-steps-do-not-follow-a-failed-ish-step;pending-as-the-first-failed-ish-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Pending as the first failed-ish step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 30,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:11"
+            },
+            "name": "a pending step",
+            "result": {
+              "duration": 1000000,
+              "status": "pending"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 31,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:11"
+            },
+            "name": "a pending step",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 32,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:19"
+            },
+            "name": "a failing step",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.041Z",
+        "line": 34,
+        "id": "failed-ish-combinations;failed-and-pending-steps-do-not-follow-a-failed-ish-step;undefined-as-the-first-failed-ish-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Undefined as the first failed-ish step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 35,
+            "match": { },
+            "name": "an undefined step",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 36,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:11"
+            },
+            "name": "a pending step",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 37,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:19"
+            },
+            "name": "a failing step",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.049Z",
+        "line": 39,
+        "id": "failed-ish-combinations;failed-and-pending-steps-do-not-follow-a-failed-ish-step;ambiguous-as-the-first-failed-ish-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Ambiguous as the first failed-ish step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 40,
+            "match": { },
+            "name": "an ambiguous step",
+            "result": {
+              "status": "ambiguous"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 41,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:11"
+            },
+            "name": "a pending step",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 42,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:19"
+            },
+            "name": "a failing step",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.057Z",
+        "line": 44,
+        "id": "failed-ish-combinations;failed-and-pending-steps-do-not-follow-a-failed-ish-step;failed-as-the-first-failed-ish-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Failed as the first failed-ish step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 45,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:19"
+            },
+            "name": "a failing step",
+            "result": {
+              "duration": 1000000,
+              "status": "failed",
+              "error_message": "Error: whoops\nsamples/failedish-combinations/failedish-combinations.feature:45"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 46,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:11"
+            },
+            "name": "a pending step",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 47,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:19"
+            },
+            "name": "a failing step",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.065Z",
+        "line": 51,
+        "id": "failed-ish-combinations;no-pickle-steps-follow-a-skipped-step;step-marks-itself-skipped",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Step marks itself skipped",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 52,
+            "match": {
+              "location": "samples/failedish-combinations/failedish-combinations.ts:7"
+            },
+            "name": "a skipped step",
+            "result": {
+              "duration": 1000000,
+              "status": "skipped"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 53,
+            "match": { },
+            "name": "an undefined step",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 54,
+            "match": { },
+            "name": "an ambiguous step",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      }
+    ],
+    "tags": [ ]
+  }
+]

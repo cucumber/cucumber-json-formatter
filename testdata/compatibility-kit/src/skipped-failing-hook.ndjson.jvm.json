@@ -1,0 +1,48 @@
+[
+  {
+    "uri": "samples/skipped-failing-hook/skipped-failing-hook.feature",
+    "id": "skipped-followed-by-failing-hook",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Skipped followed by failing hook",
+    "description": "  Failure in an After hook following a skipped step will cause that test case to be considered failed\n  overall.",
+    "elements": [
+      {
+        "start_timestamp": "1970-01-01T00:00:00.001Z",
+        "line": 6,
+        "id": "skipped-followed-by-failing-hook;failure-in-an-after-hook",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Failure in an After hook",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 7,
+            "match": {
+              "location": "samples/skipped-failing-hook/skipped-failing-hook.ts:3"
+            },
+            "name": "a step that skips",
+            "result": {
+              "duration": 1000000,
+              "status": "skipped"
+            }
+          }
+        ],
+        "after": [
+          {
+            "match": {
+              "location": "samples/skipped-failing-hook/skipped-failing-hook.ts:7"
+            },
+            "result": {
+              "duration": 1000000,
+              "status": "failed",
+              "error_message": "Error: whoops\nsamples/skipped-failing-hook/skipped-failing-hook.feature:6"
+            }
+          }
+        ]
+      }
+    ],
+    "tags": [ ]
+  }
+]

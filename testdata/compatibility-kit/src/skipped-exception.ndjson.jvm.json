@@ -1,0 +1,37 @@
+[
+  {
+    "uri": "samples/skipped-exception/skipped-exception.feature",
+    "id": "skipping-scenarios-via-exception",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Skipping scenarios via exception",
+    "description": "  Some implementations support marking a step skipped via throwing\n  an exception, which can include a message",
+    "elements": [
+      {
+        "start_timestamp": "1970-01-01T00:00:00.001Z",
+        "line": 6,
+        "id": "skipping-scenarios-via-exception;skipping-via-an-exception",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Skipping via an exception",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 7,
+            "match": {
+              "location": "samples/skipped-exception/skipped-exception.ts:3"
+            },
+            "name": "I skip a step",
+            "result": {
+              "duration": 1000000,
+              "status": "skipped",
+              "error_message": "SkippedException: skipping\nsamples/skipped-exception/skipped-exception.feature:7"
+            }
+          }
+        ]
+      }
+    ],
+    "tags": [ ]
+  }
+]
