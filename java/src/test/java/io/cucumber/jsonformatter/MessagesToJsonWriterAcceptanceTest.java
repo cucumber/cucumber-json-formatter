@@ -7,13 +7,18 @@ import com.networknt.schema.SchemaRegistry;
 import com.networknt.schema.SpecificationVersion;
 import io.cucumber.compatibilitykit.MessageOrderer;
 import io.cucumber.messages.NdjsonToMessageReader;
-import io.cucumber.messages.ndjson.Deserializer;
+import io.cucumber.messages.ndjson.Json;
 import io.cucumber.messages.types.Envelope;
 import org.json.JSONException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.skyscreamer.jsonassert.JSONAssert;
+import tools.jackson.core.StreamWriteFeature;
+import tools.jackson.core.util.DefaultPrettyPrinter;
+import tools.jackson.core.util.Separators;
+import tools.jackson.databind.cfg.ConstructorDetector;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -30,15 +35,30 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.cucumber.jsonformatter.Jackson.OBJECT_MAPPER;
-import static io.cucumber.jsonformatter.Jackson.PRETTY_PRINTER;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_ABSENT;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static tools.jackson.core.util.DefaultIndenter.SYSTEM_LINEFEED_INSTANCE;
+import static tools.jackson.core.util.Separators.Spacing.AFTER;
 
 class MessagesToJsonWriterAcceptanceTest {
-    private static final MessagesToJsonWriter.Serializer serializer = OBJECT_MAPPER.writer(PRETTY_PRINTER)::writeValue;
+    private static final MessagesToJsonWriter.Serializer serializer = JsonMapper.builder()
+            .changeDefaultPropertyInclusion(value -> value
+                    .withContentInclusion(NON_ABSENT)
+                    .withValueInclusion(NON_ABSENT)
+            )
+            .constructorDetector(ConstructorDetector.USE_PROPERTIES_BASED)
+            .disable(StreamWriteFeature.AUTO_CLOSE_TARGET)
+            .defaultPrettyPrinter(new DefaultPrettyPrinter(
+                    Separators.createDefaultInstance()
+                            .withObjectNameValueSpacing(AFTER)
+            )
+                    .withArrayIndenter(SYSTEM_LINEFEED_INSTANCE))
+            .build()::writeValue;
+    private static final NdjsonToMessageReader.Deserializer deserializer = Json.instance()
+            .map(json -> json.deserializer(Envelope.class))
+            .orElseThrow()::readValue;
     private static final Schema jsonSchema = readJsonSchema();
     private static final Random random = new Random(202509171757L);
     private static final MessageOrderer messageOrderer = new MessageOrderer(random);
@@ -64,7 +84,7 @@ class MessagesToJsonWriterAcceptanceTest {
     private static <T extends OutputStream> T writeJsonReport(TestCase testCase, T out, Consumer<List<Envelope>> orderer) throws IOException {
         List<Envelope> messages = new ArrayList<>();
         try (InputStream in = Files.newInputStream(testCase.source)) {
-            try (var envelopes = new NdjsonToMessageReader(in, new Deserializer())) {
+            try (var envelopes = new NdjsonToMessageReader(in, deserializer)) {
                 envelopes.lines().forEach(messages::add);
             }
         }

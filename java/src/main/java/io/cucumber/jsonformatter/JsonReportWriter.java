@@ -116,7 +116,7 @@ final class JsonReportWriter {
         return dateTimeFormatter.format(Convertor.toInstant(instant));
     }
 
-    List<JvmFeature> createJsonReport() {
+    JvmFeature[] createJsonReport() {
         return query.findAllTestCaseStarted()
                 .stream()
                 .map(this::createJvmElementData)
@@ -126,7 +126,7 @@ final class JsonReportWriter {
                 .values()
                 .stream()
                 .map(this::createJvmFeature)
-                .collect(toList());
+                .toArray(JvmFeature[]::new);
     }
 
     private JvmElementData createJvmElementData(TestCaseStarted testCaseStarted) {

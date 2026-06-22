@@ -1,5 +1,6 @@
 package io.cucumber.jsonformatter;
 
+import io.cucumber.jsonformatter.CucumberJvmJson.JvmFeature;
 import io.cucumber.messages.types.Envelope;
 import io.cucumber.query.Query;
 import io.cucumber.query.Repository;
@@ -10,7 +11,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.function.Function;
 
 import static io.cucumber.query.Repository.RepositoryFeature.INCLUDE_ATTACHMENTS;
@@ -77,7 +77,7 @@ public final class MessagesToJsonWriter implements AutoCloseable {
             return;
         }
         try {
-            List<CucumberJvmJson.JvmFeature> report = new JsonReportWriter(query, uriFormatter).createJsonReport();
+            JvmFeature[] report = new JsonReportWriter(query, uriFormatter).createJsonReport();
             serializer.writeValue(out, report);
         } finally {
             try {
@@ -110,7 +110,7 @@ public final class MessagesToJsonWriter implements AutoCloseable {
     @FunctionalInterface
     public interface Serializer {
 
-        void writeValue(Writer writer, Object value) throws IOException;
+        void writeValue(Writer writer, JvmFeature[] value) throws IOException;
 
     }
 

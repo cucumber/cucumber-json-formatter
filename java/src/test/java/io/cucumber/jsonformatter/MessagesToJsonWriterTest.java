@@ -1,5 +1,6 @@
 package io.cucumber.jsonformatter;
 
+import io.cucumber.messages.ndjson.Json;
 import io.cucumber.messages.types.Envelope;
 import io.cucumber.messages.types.TestRunFinished;
 import io.cucumber.messages.types.TestRunStarted;
@@ -9,7 +10,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.Instant;
 
-import static io.cucumber.jsonformatter.Jackson.OBJECT_MAPPER;
 import static io.cucumber.messages.Convertor.toMessage;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MessagesToJsonWriterTest {
-    private static final MessagesToJsonWriter.Serializer serializer = OBJECT_MAPPER::writeValue;
+    private static final MessagesToJsonWriter.Serializer serializer = Json.instance()
+            .map(json -> json.serializer(CucumberJvmJson.JvmFeature[].class))
+            .orElseThrow()::writeValue;
 
     @Test
     void it_writes_two_messages_to_xml() throws IOException {
