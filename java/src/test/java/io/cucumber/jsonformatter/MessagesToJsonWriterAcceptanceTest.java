@@ -55,7 +55,8 @@ class MessagesToJsonWriterAcceptanceTest {
                             .withObjectNameValueSpacing(AFTER)
             )
                     .withArrayIndenter(SYSTEM_LINEFEED_INSTANCE))
-            .build()::writeValue;
+            .build()
+            .writerWithDefaultPrettyPrinter()::writeValue;
     private static final NdjsonToMessageReader.Deserializer deserializer = Json.instance()
             .map(json -> json.deserializer(Envelope.class))
             .orElseThrow()::readValue;
