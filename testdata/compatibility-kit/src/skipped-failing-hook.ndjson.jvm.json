@@ -32,7 +32,7 @@
         "after": [
           {
             "match": {
-              "location": "samples/skipped-failing-hook/skipped-failing-hook.ts:7"
+              "location": "samples/skipped-failing-hook/skipped-failing-hook.ts:5"
             },
             "result": {
               "duration": 1000000,

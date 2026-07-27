@@ -225,7 +225,7 @@
             "keyword": "When ",
             "line": 36,
             "match": {
-              "location": "samples/attachments/attachments.ts:47",
+              "location": "samples/attachments/attachments.ts:44",
               "arguments": [
                 {
                   "val": "\"https://cucumber.io\"",
@@ -260,7 +260,7 @@
             "keyword": "When ",
             "line": 39,
             "match": {
-              "location": "samples/attachments/attachments.ts:51",
+              "location": "samples/attachments/attachments.ts:48",
               "arguments": [
                 {
                   "val": "\"hello\"",

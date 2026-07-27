@@ -20,7 +20,7 @@
             "keyword": "Given ",
             "line": 11,
             "match": {
-              "location": "samples/parameter-types/parameter-types.ts:16",
+              "location": "samples/parameter-types/parameter-types.ts:19",
               "arguments": [
                 {
                   "val": "LHR-CDG",
