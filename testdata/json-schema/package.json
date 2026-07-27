@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@cucumber/json-schema": "^0.2.3",
+    "@cucumber/json-schema": "^0.2.5",
     "shx": "^0.4.0"
   }
 }
