@@ -1,0 +1,308 @@
+[
+  {
+    "uri": "samples/undefined-multiple/undefined-multiple.feature",
+    "id": "undefined-steps",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Undefined steps",
+    "description": "  At runtime, Cucumber may encounter many steps in a scenario that it cannot match to a step definition.\n\n  In these cases, the scenario is not able to run and so the step status will be UNDEFINED, with\n  subsequent steps being SKIPPED and the overall result will be FAILURE.",
+    "elements": [
+      {
+        "start_timestamp": "1970-01-01T00:00:00.001Z",
+        "line": 8,
+        "id": "undefined-steps;an-undefined-step-causes-a-failure",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "An undefined step causes a failure",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 9,
+            "match": { },
+            "name": "a step that is yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.005Z",
+        "line": 11,
+        "id": "undefined-steps;all-steps-are-executed-before-a-single-undefined-step",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "All steps are executed before a single undefined step",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 12,
+            "match": {
+              "location": "samples/undefined-multiple/undefined-multiple.ts:3"
+            },
+            "name": "an implemented step",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 13,
+            "match": {
+              "location": "samples/undefined-multiple/undefined-multiple.ts:3"
+            },
+            "name": "an implemented step",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 14,
+            "match": { },
+            "name": "a step that is yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.013Z",
+        "line": 16,
+        "id": "undefined-steps;multiple-undefined-steps-will-all-remain-as-undefined",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Multiple undefined steps will all remain as undefined",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 17,
+            "match": {
+              "location": "samples/undefined-multiple/undefined-multiple.ts:3"
+            },
+            "name": "an implemented step",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 18,
+            "match": {
+              "location": "samples/undefined-multiple/undefined-multiple.ts:3"
+            },
+            "name": "an implemented step",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 19,
+            "match": { },
+            "name": "a step that is yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 20,
+            "match": { },
+            "name": "another step that is also yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 21,
+            "match": { },
+            "name": "a third step that is yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.025Z",
+        "line": 23,
+        "id": "undefined-steps;multiple-defined-steps-after-undefined-steps-are-all-skipped",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Multiple defined steps after undefined steps are all skipped",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 24,
+            "match": { },
+            "name": "a step that is yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 25,
+            "match": {
+              "location": "samples/undefined-multiple/undefined-multiple.ts:7"
+            },
+            "name": "a step that will be skipped",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 26,
+            "match": {
+              "location": "samples/undefined-multiple/undefined-multiple.ts:7"
+            },
+            "name": "a step that will be skipped",
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.033Z",
+        "line": 28,
+        "id": "undefined-steps;multiple-undefined-steps-after-skipped-steps-will-also-remain-as-undefined",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Multiple undefined steps after skipped steps will also remain as undefined",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 29,
+            "match": { },
+            "name": "a step that is yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 30,
+            "match": {
+              "location": "samples/undefined-multiple/undefined-multiple.ts:7"
+            },
+            "name": "a step that will be skipped",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 31,
+            "match": {
+              "location": "samples/undefined-multiple/undefined-multiple.ts:7"
+            },
+            "name": "a step that will be skipped",
+            "result": {
+              "status": "skipped"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 32,
+            "match": { },
+            "name": "a step that is yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 33,
+            "match": { },
+            "name": "another step that is also yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.045Z",
+        "line": 35,
+        "id": "undefined-steps;multiple-missing-snippets-reflect-parameter-types",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Multiple missing snippets reflect parameter types",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 36,
+            "match": { },
+            "name": "a list of 8 things",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 37,
+            "match": { },
+            "name": "a list of 3.14 things",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 38,
+            "match": { },
+            "name": "a list of \"many\" things",
+            "result": {
+              "status": "undefined"
+            }
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.053Z",
+        "line": 40,
+        "id": "undefined-steps;multiple-undefined-steps-also-cause-a-failure",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "Multiple undefined steps also cause a failure",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 41,
+            "match": { },
+            "name": "a step that is yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          },
+          {
+            "keyword": "And ",
+            "line": 42,
+            "match": { },
+            "name": "another step that is also yet to be defined",
+            "result": {
+              "status": "undefined"
+            }
+          }
+        ]
+      }
+    ],
+    "tags": [ ]
+  }
+]
