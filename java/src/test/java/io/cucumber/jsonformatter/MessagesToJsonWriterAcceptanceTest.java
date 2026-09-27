@@ -10,7 +10,8 @@ import io.cucumber.messages.NdjsonToMessageReader;
 import io.cucumber.messages.ndjson.Json;
 import io.cucumber.messages.types.Envelope;
 import org.json.JSONException;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -116,6 +117,7 @@ class MessagesToJsonWriterAcceptanceTest {
 
     @ParameterizedTest
     @MethodSource("all")
+    @DisabledIfEnvironmentVariable(named = "UPDATE_EXPECTED_FILES", matches = "true")
     void test(TestCase testCase) throws IOException, JSONException {
         ByteArrayOutputStream actual = writeJsonReport(testCase, messageOrderer.originalOrder());
         byte[] expected = Files.readAllBytes(testCase.expected);
@@ -124,6 +126,7 @@ class MessagesToJsonWriterAcceptanceTest {
 
     @ParameterizedTest
     @MethodSource("all")
+    @DisabledIfEnvironmentVariable(named = "UPDATE_EXPECTED_FILES", matches = "true")
     void testWithSimulatedParallelExecution(TestCase testCase) throws IOException, JSONException {
         ByteArrayOutputStream actual = writeJsonReport(testCase, messageOrderer.simulateParallelExecution());
         byte[] expected = Files.readAllBytes(testCase.expected);
@@ -132,6 +135,7 @@ class MessagesToJsonWriterAcceptanceTest {
 
     @ParameterizedTest
     @MethodSource("all")
+    @DisabledIfEnvironmentVariable(named = "UPDATE_EXPECTED_FILES", matches = "true")
     void validateAgainstJsonSchema(TestCase testCase) throws IOException {
         // The actual should be identical to the expected.
         // So for schema validation there is no need to run the formatter
@@ -147,7 +151,7 @@ class MessagesToJsonWriterAcceptanceTest {
 
     @ParameterizedTest
     @MethodSource("compatibilityKit")
-    @Disabled
+    @EnabledIfEnvironmentVariable(named = "UPDATE_EXPECTED_FILES", matches = "true")
     void updateExpectedFiles(TestCase testCase) throws IOException {
         try (OutputStream out = Files.newOutputStream(testCase.expected)) {
             writeJsonReport(testCase, out, messageOrderer.originalOrder());

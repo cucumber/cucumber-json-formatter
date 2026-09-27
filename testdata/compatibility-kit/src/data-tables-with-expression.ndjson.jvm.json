@@ -1,0 +1,50 @@
+[
+  {
+    "uri": "samples/data-tables-with-expression/data-tables-with-expression.feature",
+    "id": "data-tables",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Data Tables",
+    "description": "  Data Tables  can be combined with Cucumber expressions. The arguments from the\n  Cucumber expression are provided before the data table.",
+    "elements": [
+      {
+        "start_timestamp": "1970-01-01T00:00:00.001Z",
+        "line": 5,
+        "id": "data-tables;a-table-with-a-cucumber-expression",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "a table with a Cucumber expression",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 6,
+            "match": {
+              "location": "samples/data-tables-with-expression/data-tables-with-expression.ts:4",
+              "arguments": [
+                {
+                  "val": "\"Cucumber\"",
+                  "offset": 2
+                }
+              ]
+            },
+            "name": "a \"Cucumber\" with a table",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            },
+            "rows": [
+              {
+                "cells": [
+                  "Species",
+                  "Cucumis sativus"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "tags": [ ]
+  }
+]
