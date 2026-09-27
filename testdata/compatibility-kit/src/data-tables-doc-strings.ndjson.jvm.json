@@ -1,0 +1,81 @@
+[
+  {
+    "uri": "samples/data-tables-doc-strings/data-tables-doc-strings.feature",
+    "id": "data-tables-and-doc-strings",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Data Tables and Doc Strings",
+    "description": "  Steps can have both Data Table and Doc String as arguments at the same time",
+    "elements": [
+      {
+        "start_timestamp": "1970-01-01T00:00:00.001Z",
+        "line": 5,
+        "id": "data-tables-and-doc-strings;datatable-followed-by-docstring",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "DataTable followed by DocString",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 6,
+            "match": {
+              "location": "samples/data-tables-doc-strings/data-tables-doc-strings.ts:4"
+            },
+            "name": "a step with a data table a doc string",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            },
+            "doc_string": {
+              "line": 8,
+              "value": "world"
+            },
+            "rows": [
+              {
+                "cells": [
+                  "hello"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "start_timestamp": "1970-01-01T00:00:00.005Z",
+        "line": 12,
+        "id": "data-tables-and-doc-strings;docstring-followed-by-datatable",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "name": "DocString followed by DataTable",
+        "description": "",
+        "steps": [
+          {
+            "keyword": "Given ",
+            "line": 13,
+            "match": {
+              "location": "samples/data-tables-doc-strings/data-tables-doc-strings.ts:9"
+            },
+            "name": "a step with a doc string a data table",
+            "result": {
+              "duration": 1000000,
+              "status": "passed"
+            },
+            "doc_string": {
+              "line": 14,
+              "value": "hello"
+            },
+            "rows": [
+              {
+                "cells": [
+                  "world"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "tags": [ ]
+  }
+]
