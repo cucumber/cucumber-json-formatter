@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - [Java] Use version range for `org.jspecify:jspecify`
 
+### Changed
+- [Java] Update dependency io.cucumber:messages to permit v34
+
 ## [0.4.1] - 2026-06-23
 ### Fixed
 - Include `JvmFeature[]` in `Serializer.writeValue` signature.
