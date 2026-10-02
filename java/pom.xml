@@ -20,9 +20,9 @@
     </properties>
 
     <scm>
-        <connection>scm:git:git://github.com/cucumber/cucumber-json-formatter.git</connection>
+        <connection>scm:git:https://github.com/cucumber/cucumber-json-formatter.git</connection>
         <developerConnection>scm:git:git@github.com:cucumber/cucumber-json-formatter.git</developerConnection>
-        <url>git://github.com/cucumber/cucumber-json-formatter.git</url>
+        <url>https://github.com/cucumber/cucumber-json-formatter.git</url>
         <tag>HEAD</tag>
     </scm>
 
