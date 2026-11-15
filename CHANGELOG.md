@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- [Java] Add OSGI Bundle name ([#65](https://github.com/cucumber/cucumber-json-formatter/pull/65))
+
 ### Changed
 - [Java] Update dependency io.cucumber:messages to permit v35
 
