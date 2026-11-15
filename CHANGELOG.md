@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.5.0] - 2026-11-15
 ### Added
 - [Java] Add OSGI Bundle name ([#65](https://github.com/cucumber/cucumber-json-formatter/pull/65))
 
@@ -13,11 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Java] Update dependency io.cucumber:messages to permit v35
 
 ## [0.4.2] - 2026-08-05
-### Fixed
-- [Java] Use version range for `org.jspecify:jspecify`
-
 ### Changed
 - [Java] Update dependency io.cucumber:messages to permit v34
+
+### Fixed
+- [Java] Use version range for `org.jspecify:jspecify`
 
 ## [0.4.1] - 2026-06-23
 ### Fixed
@@ -67,7 +69,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Java implementation ([#1](https://github.com/cucumber/cucumber-json-formatter/pull/1))
 
-[Unreleased]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.4.2...HEAD
+[Unreleased]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.4.2...v0.5.0
 [0.4.2]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/cucumber/cucumber-json-formatter/compare/v0.3.2...v0.4.0
